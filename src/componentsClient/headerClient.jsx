@@ -15,6 +15,9 @@ function HeaderClient() {
   }
   const onSignUp = () => {
     nav("/SignUp");
+  } 
+  const onforgotPass = () => {
+    nav("/forgotPassClient");
   }
 
 
@@ -24,6 +27,7 @@ function HeaderClient() {
       <button onClick={onHomeClick}>Home</button>
       <button onClick={onSignUp}>Sign Up</button>
       <button onClick={onlogin}>Login</button>
+      <button onClick={onforgotPass}>forgot Pass</button>
       <button onClick={onAdmin}>Admin</button>
     </div>
   )

@@ -9,6 +9,7 @@ import Welcome from './componentsClient/welcome';
 import HomeClient from './componentsClient/homeClient';
 import DashboardAdmin from './componentsAdmin/dashboardAdmin';
 import DashboardAdmin222 from './componentsAdmin/dashboardAdmin222';
+import ForgotPass from './componentsClient/forgotPass';
 
 function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ function AppRoutes() {
           <Route path="/signup" element={<SignUpClient />} />
           <Route path="/login" element={<LogInClient />} />
           <Route path="/homeClient" element={<HomeClient />} />
+          <Route path="/forgotPassClient" element={<ForgotPass />} />
           <Route path="/*" element={<Page404 />} />
         </Route>
       </Routes>
