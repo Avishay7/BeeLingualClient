@@ -32,7 +32,7 @@ function HeaderClient() {
     nav("/settings");
   }
   const onVarifictionClick = () => {
-    nav("/varifiction");
+    nav("/varification");
   }
   const onSubmitClick = () => {
     nav("/submit");
