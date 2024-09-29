@@ -32,7 +32,7 @@ function HeaderClient() {
     nav("/settings");
   }
   const onVarifictionClick = () => {
-    nav("/varifiction");
+    nav("/verification");
   }
   const onSubmitClick = () => {
     nav("/submit");
@@ -52,7 +52,7 @@ function HeaderClient() {
       <button onClick={onWelcomeClick}>Welcom</button>
       <button onClick={onloginClick}>Login</button>
       <button onClick={onSignUpClick}>Sign Up</button>
-      <button onClick={onVarifictionClick}>varifiction</button>
+      <button onClick={onVarifictionClick}>Verification</button>
       <button onClick={onHomeClick}>Home</button>
       <button onClick={onAvatarClick}>avatar</button>
       <button onClick={onChatClick}>chat</button>
