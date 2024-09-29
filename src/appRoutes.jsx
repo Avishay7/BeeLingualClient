@@ -36,7 +36,7 @@ function AppRoutes() {
           <Route path="/avatar" element={<Avatar/>}/>
           <Route path="/chat" element={<Chat/>}/>
           <Route path="/settings" element={<Settings/>}/>
-          <Route path="/changePassword" element={<ChangePassword/>}/>
+          <Route path="/changePassClint" element={<ChangePassword/>}/>
           <Route path="/submit" element={<Submit />} />
           <Route path="/forgotPassClient" element={<ForgotPass />} />
           <Route path="/help" element={<Help/>} />
