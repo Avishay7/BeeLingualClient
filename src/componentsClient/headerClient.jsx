@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 function HeaderClient() {
   let nav = useNavigate()
 
-  const onHomeClick = () => {
+  const onWelcomeClick = () => {
     nav("/");
+  }
+  const onHomeClick = () => {
+    nav("/homeClient");
   }
   const onAdmin = () => {
     nav("/Admin");
@@ -24,6 +27,7 @@ function HeaderClient() {
   return (
 
     <div>
+      <button onClick={onWelcomeClick}>Welcom</button>
       <button onClick={onHomeClick}>Home</button>
       <button onClick={onSignUp}>Sign Up</button>
       <button onClick={onlogin}>Login</button>
