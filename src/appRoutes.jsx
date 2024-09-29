@@ -10,6 +10,13 @@ import HomeClient from './componentsClient/homeClient';
 import DashboardAdmin from './componentsAdmin/dashboardAdmin';
 import DashboardAdmin222 from './componentsAdmin/dashboardAdmin222';
 import ForgotPass from './componentsClient/forgotPass';
+import Varification from './componentsClient/varification';
+import Avatar from './componentsClient/avatar';
+import Chat from './componentsClient/chat';
+import Settings from './componentsClient/settings';
+import ChangePassword from './componentsClient/changePassword';
+import Submit from './componentsClient/submit';
+import Help from './componentsClient/help';
 
 function AppRoutes() {
   return (
@@ -22,10 +29,17 @@ function AppRoutes() {
 
         <Route path="/" element={<LayoutClient />}>
           <Route index element={<Welcome />} />
-          <Route path="/signup" element={<SignUpClient />} />
           <Route path="/login" element={<LogInClient />} />
-          <Route path="/homeClient" element={<HomeClient />} />
+          <Route path="/signup" element={<SignUpClient />} />
+          <Route path="varification" element={<Varification/>}/>
+          <Route path="/homeClient" element={<HomeClient />} /> 
+          <Route path="/avatar" element={<Avatar/>}/>
+          <Route path="/chat" element={<Chat/>}/>
+          <Route path="/settings" element={<Settings/>}/>
+          <Route path="/changePassword" element={<ChangePassword/>}/>
+          <Route path="/submit" element={<Submit />} />
           <Route path="/forgotPassClient" element={<ForgotPass />} />
+          <Route path="/help" element={<Help/>} />
           <Route path="/*" element={<Page404 />} />
         </Route>
       </Routes>
