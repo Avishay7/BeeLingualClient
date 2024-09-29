@@ -10,29 +10,58 @@ function HeaderClient() {
   const onHomeClick = () => {
     nav("/homeClient");
   }
-  const onAdmin = () => {
+  const onAdminClick = () => {
     nav("/Admin");
   }
-  const onlogin = () => {
+  const onloginClick = () => {
     nav("/Login");
   }
-  const onSignUp = () => {
+  const onSignUpClick = () => {
     nav("/SignUp");
   } 
-  const onforgotPass = () => {
+  const onForgotPassClick = () => {
     nav("/forgotPassClient");
   }
+  const onAvatarClick = () => {
+    nav("/avatar");
+  }
+  const onChatClick = () => {
+    nav("/chat");
+  }
+  const onSettingsClick = () => {
+    nav("/settings");
+  }
+  const onVarifictionClick = () => {
+    nav("/varifiction");
+  }
+  const onSubmitClick = () => {
+    nav("/submit");
+  }
+  const onHelpClick = () => {
+    nav("/help");
+  }
+  const onChangePassClick = () => {
+    nav("/changePassClient");
+  }
+
 
 
   return (
 
     <div>
       <button onClick={onWelcomeClick}>Welcom</button>
+      <button onClick={onloginClick}>Login</button>
+      <button onClick={onSignUpClick}>Sign Up</button>
+      <button onClick={onVarifictionClick}>varifiction</button>
       <button onClick={onHomeClick}>Home</button>
-      <button onClick={onSignUp}>Sign Up</button>
-      <button onClick={onlogin}>Login</button>
-      <button onClick={onforgotPass}>forgot Pass</button>
-      <button onClick={onAdmin}>Admin</button>
+      <button onClick={onAvatarClick}>avatar</button>
+      <button onClick={onChatClick}>chat</button>
+      <button onClick={onSettingsClick}>settings</button>
+      <button onClick={onChangePassClick}>change pass</button>
+      <button onClick={onSubmitClick}>submit</button>
+      <button onClick={onForgotPassClick}>forgot Pass</button>
+      <button onClick={onHelpClick}>help</button>
+      <button onClick={onAdminClick}>Admin</button> 
     </div>
   )
 }
