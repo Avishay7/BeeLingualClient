@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Chet() {
+function Chat() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function Chet() {
   )
 }
 
-export default Chet
+export default Chat
