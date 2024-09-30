@@ -41,7 +41,7 @@ function HeaderClient() {
     nav("/help");
   }
   const onChangePassClick = () => {
-    nav("/changePassClient");
+    nav("/changePassClint");
   }
 
 
