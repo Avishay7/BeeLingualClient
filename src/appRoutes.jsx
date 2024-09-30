@@ -31,12 +31,12 @@ function AppRoutes() {
           <Route index element={<Welcome />} />
           <Route path="/login" element={<LogInClient />} />
           <Route path="/signup" element={<SignUpClient />} />
-          <Route path="varification" element={<Varification/>}/>
+          <Route path="/varification" element={<Varification/>}/>
           <Route path="/homeClient" element={<HomeClient />} /> 
           <Route path="/avatar" element={<Avatar/>}/>
           <Route path="/chat" element={<Chat/>}/>
           <Route path="/settings" element={<Settings/>}/>
-          <Route path="/changePassClint" element={<ChangePassword/>}/>
+          <Route path="/changePassClient" element={<ChangePassword/>}/>
           <Route path="/submit" element={<Submit />} />
           <Route path="/forgotPassClient" element={<ForgotPass />} />
           <Route path="/help" element={<Help/>} />
