@@ -9,7 +9,7 @@ const ChangePassword = () => {
         <h3 className="text-center mb-4">ChangePassword</h3>
         <form>
           <div className="form-group mb-3">
-            <label>ChangePassword</label>
+            <label>old Password</label>
             <input type="password" className="form-control" required />
           </div>
           <div className="form-group mb-3">
@@ -26,6 +26,6 @@ const ChangePassword = () => {
     </div>
     </>
   )
-  }
+};
 
 export default ChangePassword
