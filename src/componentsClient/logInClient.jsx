@@ -1,28 +1,24 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
 
 const loginClient = () => {
   return (
-    <div className="container mt-5">
+    <div className=" container mt-5 border border-dark rounded p-4 d-flex flex-column text-center" style={{ width: '80%', maxWidth: '500px', backgroundColor: 'white' }}>
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className=" card ">
             <div className="text-center">
-              <br />
               <img src="" alt="BeeLengual" />
-              <h3>Login</h3>
+              <h3>Sign in</h3>
             </div>
             <div className="card-body">
-              <Form>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control className='opacity-50' type="email" placeholder="Enter email" />
-                </Form.Group>
-                
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control className='opacity-50' type="password" placeholder="Password" />
-                </Form.Group>
+            <div className="mb-4 flex-grow-1">
+              <input
+                type="email" className="form-control" placeholder="Enter email" style={{ fontSize: '1rem' }} />
+            </div>
+
+                <div className="mb-4 flex-grow-1 ">
+              <input
+                type="Password" className="form-control" placeholder="Password" style={{ fontSize: '1rem' }} />
+            </div>
                 <div className="mt-3 ">
                   <a href="#">Forgot password?</a>
                   <br />
@@ -33,7 +29,7 @@ const loginClient = () => {
                 </div>
                 <br />
                 <div className='text-center opacity-50'>
-                  <p>----------or sign in with----------</p>
+                  <p>--------or sign in with--------</p>
                 </div>
                 <div className='text-center'>
                   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="100" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
@@ -43,10 +39,7 @@ const loginClient = () => {
                 <div className='text-center'>
                   <a href="#">Create account</a>
                 </div>
-
-              </Form>
             </div>
-          </div>
         </div>
       </div>
     </div>
