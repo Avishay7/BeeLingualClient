@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ChangePassword = () => {
+
   return (
     <>
     <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -25,6 +26,6 @@ const ChangePassword = () => {
     </div>
     </>
   )
-}
+
 
 export default ChangePassword
