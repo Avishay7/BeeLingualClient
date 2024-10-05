@@ -1,10 +1,15 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { addEmail } from '../featuers/myDetailsSlice';
+
 
 const loginClient = () => {
   let nav = useNavigate();
-  let { register, handleSubmit } = useForm();
+  let { register, handleSubmit, formState: { errors } } = useForm();
+  const dispatch = useDispatch();
+
 
   const onSubForm = (data) => {
     doApi(data);
@@ -13,6 +18,7 @@ const loginClient = () => {
   const doApi = async (_dataBody) => {
     // API request
     console.log(_dataBody);
+    dispatch(addEmail({ email: _dataBody.email }));
     nav("/homeClient");
   }
 
@@ -39,13 +45,14 @@ const loginClient = () => {
         <h3 className='m-2'>Sign in</h3>
 
         <form onSubmit={handleSubmit(onSubForm)} className="text-center">
-
-          <div className="m-2 flex-grow-1">
+          <div className="m-2 flex-grow-1 text-start">
             <input {...emailRef} type="email" className="form-control" placeholder="Enter email" style={{ fontSize: '1rem' }} />
+            {errors.email ? <small className='text-danger '>* Email invalid</small> : ""}
           </div>
 
-          <div className="m-2 flex-grow-1 ">
+          <div className="m-2 flex-grow-1 text-start">
             <input {...passwordRef} type="Password" className="form-control" placeholder="Password" style={{ fontSize: '1rem' }} />
+            {errors.password ? <small className='text-danger'>* Enter valid password, min 3 chars</small> : ""}
             <p onClick={toforgatPass} className='mt-1 text-danger text-end'>Forgot password?</p>
           </div>
 
@@ -66,7 +73,7 @@ const loginClient = () => {
         </div> */}
 
         <div className='m-2 text-center'>
-          <p className='text-info'>Create account</p>
+          <p onClick={toSignUp} className='text-info'>Create account</p>
         </div>
 
       </div>
