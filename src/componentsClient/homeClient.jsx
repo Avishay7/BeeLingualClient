@@ -2,17 +2,17 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
 const homeClient = () => {
-    const myEmail = useSelector(state => state.myDetailsSlice.email);
+    const myName = useSelector(state => state.myDetailsSlice.name);
     
     useEffect(() => {
-       console.log("mail:" + myEmail);
+       console.log("name:" + myName);
     }, [])
 
     return (
         <div className="container">
             {/* Navbar */}
             <nav className="navbar navbar-light bg-light">
-                <a className="navbar-brand" href="#">Welcome: {myEmail}</a>              
+                <a className="navbar-brand" href="#">Welcome: {myName}</a>              
                 <div className="ml-auto">
                     <button className="btn btn-outline-primary">Menu Item 1</button>
                     <button className="btn btn-outline-primary">Menu Item 2</button>
