@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // קומפוננטת הצ'אט
 function Chat() {
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
-    { text: 'אני מחפש מידע על עיצוב דף צ\'אט.', type: 'sent' },
-    { text: 'הנה דוגמה פשוטה באמצעות Bootstrap.', type: 'received' }
+    { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
+    { text: 'בשמחה בוא נתחיל.', type: 'received' }
   ]);
   const [newMessage, setNewMessage] = useState('');
 
@@ -18,10 +18,22 @@ function Chat() {
     }
   };
 
+  // שימוש ב-useEffect כדי לשלוח תגובה אוטומטית
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].type === 'sent') {
+      const autoReply = 'זו תגובה אוטומטית';
+      const timeout = setTimeout(() => {
+        setMessages([...messages, { text: autoReply, type: 'received' }]);
+      }, 1000); // תגובה אוטומטית לאחר שניה אחת
+
+      return () => clearTimeout(timeout);
+    }
+  }, [messages]);
+
   return (
-    <div className="container d-flex justify-content-center mt-5">
-      <div className="card" style={{ width: '22rem' }}>
-        <div className="card-body d-flex flex-column" style={{ height: '500px', overflowY: 'auto' }}>
+    <div className="d-flex" style={{ height: '100vh', width: '100%' }}>
+      <div className="card" style={{ width: '50%', height: '100%' }}>
+        <div className="card-body d-flex flex-column" style={{ height: '100%', overflowY: 'auto' }}>
           <div className="chat-screen d-flex flex-column">
             {messages.map((msg, index) => (
               <div key={index} className={`d-flex justify-content-${msg.type === 'sent' ? 'end' : 'start'} mb-3`}>
