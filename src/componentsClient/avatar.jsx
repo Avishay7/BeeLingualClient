@@ -8,7 +8,7 @@ function Avatar() {
     const [gender, setGender] = useState(''); // שמירת בחירת המגדר
     const [uploadedImage, setUploadedImage] = useState(null); // שמירת התמונה שהועלתה
 
-    // יצירת URLים לאוואטרים מצויירים
+    // יצירת URLים לאוואטרים מצויירים בסגנון ריק ומורטי
     const maleAvatars = [
       'https://avatars.dicebear.com/api/adventurer/male1.svg',
       'https://avatars.dicebear.com/api/adventurer/male2.svg',
@@ -32,8 +32,14 @@ function Avatar() {
     // פונקציה להעלאת תמונה
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
-      setUploadedImage(URL.createObjectURL(file)); // יצירת URL מקומי לתצוגה מקדימה של התמונה
-      setSelectedAvatar(null); // איפוס אוואטר נבחר
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setUploadedImage(reader.result);
+          setSelectedAvatar(null); // איפוס אוואטר נבחר
+        };
+        reader.readAsDataURL(file);
+      }
     };
 
     return (
@@ -98,7 +104,7 @@ function Avatar() {
                     src={avatar}
                     alt={`Avatar ${index + 1}`}
                     className={`img-thumbnail rounded-circle ${selectedAvatar === avatar ? 'border-primary' : ''}`}
-                    style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                    style={{ width: '100px', height: '100px', cursor: 'pointer', objectFit: 'cover' }}
                     onClick={() => handleAvatarClick(avatar)}
                   />
                 </div>
@@ -118,3 +124,4 @@ function Avatar() {
 }
 
 export default Avatar;
+
