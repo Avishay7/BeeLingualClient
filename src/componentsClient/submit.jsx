@@ -39,11 +39,13 @@ function Submit() {
             value={email}
             onChange={(e)=> setEmail(e.target.value)}
           />
+          
         </div>
         <button className="btn btn-primary btn-block"
                 style={{ height: '50px', fontSize: '1rem' }}
                 onClick={handleSubmit}>
                   Submit
+                  
         </button>
       </div>
     </div>
