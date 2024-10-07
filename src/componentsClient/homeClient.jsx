@@ -9,34 +9,51 @@ const homeClient = () => {
     }, [])
 
     return (
-        <div className="container">
-            {/* Navbar */}
-            <nav className="navbar navbar-light bg-light">
-                <a className="navbar-brand" href="#">Welcome: {myName}</a>              
-                <div className="ml-auto">
-                    <button className="btn btn-outline-primary">Menu Item 1</button>
-                    <button className="btn btn-outline-primary">Menu Item 2</button>
-                </div>
-            </nav>
+        <div className="container-fluid" style={{ height: '100vh' }}>
+            <div className="row h-100">
+                <div className="d-flex flex-row justify-content-between w-100 h-100">
+                    {/* עוטף את הכפתורים */}
+                    <div id='left' className="border border-primary p-5 col-md-6 d-flex flex-column align-items-center justify-content-center h-100">
+                    <div className='d-flex align-items-center mt-2 ms-2 w-100'>
+                            <div className='bg-white rounded-circle border border-secondary d-flex justify-content-center align-items-center' style={{ width: '70px', height: '70px' }}>
+                                <span style={{ fontSize: '2rem' }}>1</span>
+                            </div>
+                            <button className="btn btn-outline-primary mb-2 ms-2" style={{ width: '100%', fontSize: '1.5rem' }}>choose avatar</button>
+                        </div>
+                        <div className='d-flex align-items-center mt-2 ms-2 w-100'>
+                            <div className='bg-white rounded-circle border border-secondary d-flex justify-content-center align-items-center' style={{ width: '70px', height: '70px' }}>
+                                <span style={{ fontSize: '2rem' }}>2</span>
+                            </div>
+                            <button className="btn btn-outline-primary mb-2 ms-2" style={{ width: '100%', fontSize: '1.5rem' }}>choose level</button>
+                        </div>
+                        <div className='d-flex align-items-center mt-2 ms-2 w-100'>
+                            <div className='bg-white rounded-circle border border-secondary d-flex justify-content-center align-items-center' style={{ width: '70px', height: '70px' }}>
+                                <span style={{ fontSize: '2rem' }}>3</span>
+                            </div>
+                            <button className="btn btn-outline-primary mb-2 ms-2" style={{ width: '100%', fontSize: '1.5rem' }}>start</button>
+                        </div>
+                    </div>
 
-            <div className="row mt-4">
-
-                <div className="col-md-6 d-flex flex-column align-items-end">
-                    {/* Buttons */}
-                    <button className="btn btn-outline-primary mb-2">choose avatar</button>
-                    <button className="btn btn-outline-primary mb-2">choose level</button>
-                    <button className="btn btn-outline-primary ">start</button>
-                </div>
-
-                <div className="col-md-6">
-                    {/* Input Fields */}
-                    <div className="d-flex flex-column">
-                        <input type="text" className="form-control mb-2" placeholder="Input 1" />
-                        <input type="text" className="form-control mb-2" placeholder="Input 2" />
-                        <input type="text" className="form-control" placeholder="Input 3" />
+                    {/* עוטף את השורות מידע */}
+                    <div id='right' className='border border-primary p-5 col-md-6 h-100'>
+                        <div className="col-md-12 border border-primary p-5 rounded-5 h-100">
+                            <div className="d-flex flex-column">
+                                <div className='bg-white text-xl-center m-3 w-100' style={{ flex: 1 }}>
+                                    <p className=''>ddd</p>
+                                </div>
+                                <div className='bg-white text-xl-center m-3 w-100' style={{ flex: 1 }}>
+                                    <p className=''>dd</p>
+                                </div>
+                                <div className='bg-white text-xl-center m-3 w-100' style={{ flex: 1 }}>
+                                    <p className=''>dd</p>
+                                </div>
+                                <div className='bg-white text-xl-center m-3 w-100' style={{ flex: 1 }}>
+                                    <p className=''>dd</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
