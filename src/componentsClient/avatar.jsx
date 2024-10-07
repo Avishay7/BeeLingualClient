@@ -32,8 +32,14 @@ function Avatar() {
     // פונקציה להעלאת תמונה
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
-      setUploadedImage(URL.createObjectURL(file)); // יצירת URL מקומי לתצוגה מקדימה של התמונה
-      setSelectedAvatar(null); // איפוס אוואטר נבחר
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setUploadedImage(reader.result);
+          setSelectedAvatar(null); // מחיקת האוואטר הנבחר כאשר מועלית תמונה מותאמת
+        };
+        reader.readAsDataURL(file);
+      }
     };
 
     return (
@@ -74,7 +80,7 @@ function Avatar() {
                   src={uploadedImage}
                   alt="Uploaded Preview"
                   className="rounded-circle"
-                  style={{ width: '150px', height: '150px' }}
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                 />
                 <p>תמונה שהועלתה</p>
               </div>
@@ -84,7 +90,7 @@ function Avatar() {
                   src={selectedAvatar}
                   alt="Selected Avatar"
                   className="rounded-circle"
-                  style={{ width: '150px', height: '150px' }}
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                 />
                 <p>האוואטר הנבחר שלך</p>
               </div>
@@ -98,7 +104,7 @@ function Avatar() {
                     src={avatar}
                     alt={`Avatar ${index + 1}`}
                     className={`img-thumbnail rounded-circle ${selectedAvatar === avatar ? 'border-primary' : ''}`}
-                    style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                    style={{ width: '100px', height: '100px', cursor: 'pointer', objectFit: 'cover' }}
                     onClick={() => handleAvatarClick(avatar)}
                   />
                 </div>
@@ -110,7 +116,6 @@ function Avatar() {
     );
   };
 
-  // החזרת הקומפוננטה AvatarPicker בתוך הרכיב Avatar
   return (
     <div>
       <AvatarPicker />
