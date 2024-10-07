@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Chat() {
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
-    { text: 'אני מחפש מידע על עיצוב דף צ\'אט.', type: 'sent' },
-    { text: 'הנה דוגמה פשוטה באמצעות Bootstrap.', type: 'received' }
+    { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
+    { text: 'בשמחה בוא נתחיל.', type: 'received' }
   ]);
   const [newMessage, setNewMessage] = useState('');
 

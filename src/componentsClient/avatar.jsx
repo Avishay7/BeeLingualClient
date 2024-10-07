@@ -8,19 +8,19 @@ function Avatar() {
     const [gender, setGender] = useState(''); // שמירת בחירת המגדר
     const [uploadedImage, setUploadedImage] = useState(null); // שמירת התמונה שהועלתה
 
-    // רשימת אוואטרים לבחירת משתמש
+    // יצירת URLים לאוואטרים מצויירים בסגנון ריק ומורטי
     const maleAvatars = [
-      'https://randomuser.me/api/portraits/men/1.jpg',
-      'https://randomuser.me/api/portraits/men/3.jpg',
-      'https://randomuser.me/api/portraits/men/5.jpg',
-      'https://randomuser.me/api/portraits/men/7.jpg'
+      'https://avatars.dicebear.com/api/adventurer/male1.svg',
+      'https://avatars.dicebear.com/api/adventurer/male2.svg',
+      'https://avatars.dicebear.com/api/adventurer/male3.svg',
+      'https://avatars.dicebear.com/api/adventurer/male4.svg'
     ];
 
     const femaleAvatars = [
-      'https://randomuser.me/api/portraits/women/2.jpg',
-      'https://randomuser.me/api/portraits/women/4.jpg',
-      'https://randomuser.me/api/portraits/women/6.jpg',
-      'https://randomuser.me/api/portraits/women/8.jpg'
+      'https://avatars.dicebear.com/api/adventurer/female1.svg',
+      'https://avatars.dicebear.com/api/adventurer/female2.svg',
+      'https://avatars.dicebear.com/api/adventurer/female3.svg',
+      'https://avatars.dicebear.com/api/adventurer/female4.svg'
     ];
 
     // פונקציה לבחירת אוואטר
@@ -32,8 +32,14 @@ function Avatar() {
     // פונקציה להעלאת תמונה
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
-      setUploadedImage(URL.createObjectURL(file)); // יצירת URL מקומי לתצוגה מקדימה של התמונה
-      setSelectedAvatar(null); // איפוס אוואטר נבחר
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setUploadedImage(reader.result);
+          setSelectedAvatar(null); // איפוס אוואטר נבחר
+        };
+        reader.readAsDataURL(file);
+      }
     };
 
     return (
@@ -74,7 +80,7 @@ function Avatar() {
                   src={uploadedImage}
                   alt="Uploaded Preview"
                   className="rounded-circle"
-                  style={{ width: '150px', height: '150px' }}
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                 />
                 <p>תמונה שהועלתה</p>
               </div>
@@ -84,7 +90,7 @@ function Avatar() {
                   src={selectedAvatar}
                   alt="Selected Avatar"
                   className="rounded-circle"
-                  style={{ width: '150px', height: '150px' }}
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                 />
                 <p>האוואטר הנבחר שלך</p>
               </div>
@@ -98,7 +104,7 @@ function Avatar() {
                     src={avatar}
                     alt={`Avatar ${index + 1}`}
                     className={`img-thumbnail rounded-circle ${selectedAvatar === avatar ? 'border-primary' : ''}`}
-                    style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                    style={{ width: '100px', height: '100px', cursor: 'pointer', objectFit: 'cover' }}
                     onClick={() => handleAvatarClick(avatar)}
                   />
                 </div>
@@ -110,7 +116,6 @@ function Avatar() {
     );
   };
 
-  // החזרת הקומפוננטה AvatarPicker בתוך הרכיב Avatar
   return (
     <div>
       <AvatarPicker />
@@ -119,3 +124,4 @@ function Avatar() {
 }
 
 export default Avatar;
+
