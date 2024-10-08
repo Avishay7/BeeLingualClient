@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
+
+
+
+
 const homeClient = () => {
     const myName = useSelector(state => state.myDetailsSlice.name);
+    
     
     useEffect(() => {
        console.log("name:" + myName);
@@ -17,10 +22,14 @@ const homeClient = () => {
         if (step === 1) {
             navigate('/avatar'); // הנתיב לדף בחירת אווטאר
         }
+        else if(step===2){
+           
+        }
         else if(step===3){
             navigate('/chat');
         }
     };
+
     
     return (
         <div className="container-fluid" style={{ height: '100vh', backgroundColor: '#f8f9fa' }}>
@@ -35,7 +44,7 @@ const homeClient = () => {
                                 <span style={{ fontSize: '2rem' }}>{step}</span>
                             </div>
                             <button className="btn btn-outline-primary rounded-5 " onClick={()=> handleButtonClick(step)} style={{ width: '60%', fontSize: '2.9rem',padding:'20px', margin:'15px'}}>
-                                {step === 1 ? 'Choose Avatar' : step === 2 ? 'Choose Level' : 'Start'}
+                                {step === 1 ? ' Personalize' : step === 2 ? 'Choose Level' : 'Start'}
                             </button>
                         </div>
                     ))}
@@ -56,6 +65,8 @@ const homeClient = () => {
                 </div>
             </div>
         </div>
+
+        
     </div>
     );
 }
