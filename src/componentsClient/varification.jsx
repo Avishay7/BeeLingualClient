@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 const Varification = () => {
-  const email = "user****@example.com";
+  const myName = useSelector(state => state.myDetailsSlice.email);
+  const email = myName;
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
