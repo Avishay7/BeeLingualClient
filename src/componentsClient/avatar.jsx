@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 function Avatar() {
   const AvatarPicker = () => {
@@ -45,6 +46,14 @@ function Avatar() {
       setConfirmed(true);
       alert('האוואטר אושר בהצלחה!');
     };
+
+    const navigate = useNavigate();
+
+    const handleSubmit =()=>{
+      navigate('/homeClient');
+
+      
+    }
 
     return (
       <div className="container mt-5">
@@ -118,7 +127,7 @@ function Avatar() {
             {/* כפתור אישור */}
             {(selectedAvatar || uploadedImage) && (
               <div className="mt-4">
-                <button className="btn btn-success" onClick={handleConfirm} disabled={confirmed}>
+                <button className="btn btn-success" onClick={handleSubmit} disabled={confirmed}>
                   {confirmed ? 'אושר' : 'אשר בחירה'}
                 </button>
               </div>
