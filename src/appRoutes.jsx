@@ -17,6 +17,7 @@ import Settings from './componentsClient/settings';
 import ChangePassword from './componentsClient/changePassword';
 import Submit from './componentsClient/submit';
 import Help from './componentsClient/help';
+import VarificationforgotPass from './componentsClient/varificationforgotPass'
 
 function AppRoutes() {
   return (
@@ -41,6 +42,7 @@ function AppRoutes() {
           <Route path="/forgotPassClient" element={<ForgotPass />} />
           <Route path="/help" element={<Help/>} />
           <Route path="/*" element={<Page404 />} />
+          <Route path="/VarificationforgotPass" element={<VarificationforgotPass/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

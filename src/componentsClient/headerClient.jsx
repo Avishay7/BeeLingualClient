@@ -43,6 +43,9 @@ function HeaderClient() {
   const onChangePassClick = () => {
     nav("/changePassClint");
   }
+  const onVarificationforgotPass = () => {
+    nav("/VarificationforgotPass");
+  }
 
 
 
@@ -62,6 +65,7 @@ function HeaderClient() {
       <button onClick={onForgotPassClick}>forgot Pass</button>
       <button onClick={onHelpClick}>help</button>
       <button onClick={onAdminClick}>Admin</button> 
+      <button onClick={onVarificationforgotPass}>Varification2</button>
     </div>
   )
 }
