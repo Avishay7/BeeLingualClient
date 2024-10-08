@@ -20,7 +20,7 @@ function SignUpClient() {
     console.log(_dataBody);
     dispatch(addName({ name: _dataBody.FirstName }));
     dispatch(addEmail({ email: _dataBody.email }));
-    nav("/homeClient");
+    nav("/varification");
   }
 
   let firstNameRef = register("FirstName", { required: true, minLength: 2, maxLength: 20 });

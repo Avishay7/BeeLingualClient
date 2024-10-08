@@ -22,7 +22,7 @@ const Welcome = () => {
                 <div className="px-4" style={{ height: '100%', width: "60%" }}  >
                     <div className="bg-white p-4 shadow-lg text-center" style={{ height: '100%',width: "80%", borderRadius: '16px' }}>
                         <h3 className="py-2">About Us</h3>
-                        <p>We are a company focused on providing the best services... We are a company focused on providing the best services... We are a company focused on providing the best services... We are a company focused on providing the best services... We are a company focused on providing the best services...</p>
+                        <p>We are a company focused on providing the best services... We are a company focused on providing the best services... We are a company focused on providing the best services... We are a company focused on providing the best services... </p>
                     </div>
                 </div>
             </div>
