@@ -32,7 +32,8 @@ function Chat() {
 
   return (
     <div className="d-flex" style={{ height: '100vh', width: '100%' }}>
-      <div className="card" style={{ width: '50%', height: '100%' }}>
+      {/* אזור הצ'אט שתופס 70% מהמסך */}
+      <div className="card border shadow-lg" style={{ width: '70%', height: '100%', marginRight: '2%', borderRadius: '10px' }}>
         <div className="card-body d-flex flex-column" style={{ height: '100%', overflowY: 'auto' }}>
           <div className="chat-screen d-flex flex-column">
             {messages.map((msg, index) => (
@@ -59,6 +60,15 @@ function Chat() {
             <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
           </div>
         </div>
+      </div>
+
+      {/* אזור החדשות שתופס 30% מהמסך */}
+      <div className="news-section" style={{ width: '30%', height: '100%', overflowY: 'auto' }}>
+        <iframe
+          src="https://news.google.com"
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          title="Google News"
+        ></iframe>
       </div>
     </div>
   );
