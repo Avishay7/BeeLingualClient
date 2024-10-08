@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Help = () => {
-  return (
-    <div>
-       return (
+  
+    const [openIndex, setOpenIndex] = useState(null);
+
+    const toggleAccordion = (index) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
+
+    return (
         <div className="container mt-5">
             <h1 className="text-center">דף עזרה</h1>
             <div className="accordion" id="accordionExample">
@@ -11,24 +16,19 @@ const Help = () => {
                 <div className="accordion-item">
                     <h2 className="accordion-header" id="headingOne">
                         <button
-                            className="accordion-button"
+                            className={`accordion-button ${openIndex === 0 ? '' : 'collapsed'}`}
                             type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne"
+                            onClick={() => toggleAccordion(0)}
                         >
-                            מה זו הפלטפורמה שלנו?
+                            ?מה זו הפלטפורמה שלנו
                         </button>
                     </h2>
                     <div
-                        id="collapseOne"
-                        className="accordion-collapse collapse show"
+                        className={`accordion-collapse collapse ${openIndex === 0 ? 'show' : ''}`}
                         aria-labelledby="headingOne"
-                        data-bs-parent="#accordionExample"
                     >
                         <div className="accordion-body">
-                            הפלטפורמה שלנו מציעה מגוון רחב של שירותים לשיפור הידע והכישורים שלך.
+                            .הפלטפורמה שלנו מציעה מגוון רחב של שירותים לשיפור הידע והכישורים שלך
                         </div>
                     </div>
                 </div>
@@ -37,24 +37,19 @@ const Help = () => {
                 <div className="accordion-item">
                     <h2 className="accordion-header" id="headingTwo">
                         <button
-                            className="accordion-button collapsed"
+                            className={`accordion-button ${openIndex === 1 ? '' : 'collapsed'}`}
                             type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo"
-                            aria-expanded="false"
-                            aria-controls="collapseTwo"
+                            onClick={() => toggleAccordion(1)}
                         >
                             ?איך אני מתאם פגישה
                         </button>
                     </h2>
                     <div
-                        id="collapseTwo"
-                        className="accordion-collapse collapse"
+                        className={`accordion-collapse collapse ${openIndex === 1 ? 'show' : ''}`}
                         aria-labelledby="headingTwo"
-                        data-bs-parent="#accordionExample"
                     >
                         <div className="accordion-body">
-                            אתה יכול לתאם פגישה באמצעות טופס ההזמנה באתר או על ידי יצירת קשר עם צוות התמיכה.
+                            .אתה יכול לתאם פגישה באמצעות טופס ההזמנה באתר או על ידי יצירת קשר עם צוות התמיכה
                         </div>
                     </div>
                 </div>
@@ -63,24 +58,19 @@ const Help = () => {
                 <div className="accordion-item">
                     <h2 className="accordion-header" id="headingThree">
                         <button
-                            className="accordion-button collapsed"
+                            className={`accordion-button ${openIndex === 2 ? '' : 'collapsed'}`}
                             type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree"
-                            aria-expanded="false"
-                            aria-controls="collapseThree"
+                            onClick={() => toggleAccordion(2)}
                         >
-                            מהן שעות הפעילות של התמיכה?
+                            ?מהן שעות הפעילות של התמיכה
                         </button>
                     </h2>
                     <div
-                        id="collapseThree"
-                        className="accordion-collapse collapse"
+                        className={`accordion-collapse collapse ${openIndex === 2 ? 'show' : ''}`}
                         aria-labelledby="headingThree"
-                        data-bs-parent="#accordionExample"
                     >
                         <div className="accordion-body">
-                            שעות הפעילות של התמיכה הן בימים שני עד שישי, 9:00-17:00.
+                            .שעות הפעילות של התמיכה הן בימים שני עד שישי, 9:00-17:00
                         </div>
                     </div>
                 </div>
@@ -89,32 +79,25 @@ const Help = () => {
                 <div className="accordion-item">
                     <h2 className="accordion-header" id="headingFour">
                         <button
-                            className="accordion-button collapsed"
+                            className={`accordion-button ${openIndex === 3 ? '' : 'collapsed'}`}
                             type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseFour"
-                            aria-expanded="false"
-                            aria-controls="collapseFour"
+                            onClick={() => toggleAccordion(3)}
                         >
-                            איך אני יכול לשחזר את הסיסמה שלי?
+                            ?איך אני יכול לשחזר את הסיסמה שלי
                         </button>
                     </h2>
                     <div
-                        id="collapseFour"
-                        className="accordion-collapse collapse"
+                        className={`accordion-collapse collapse ${openIndex === 3 ? 'show' : ''}`}
                         aria-labelledby="headingFour"
-                        data-bs-parent="#accordionExample"
                     >
                         <div className="accordion-body">
-                            תוכל לשחזר את הסיסמה שלך באמצעות הקישור לשחזור סיסמה בדף הכניסה.
+                            .תוכל לשחזר את הסיסמה שלך באמצעות הקישור לשחזור סיסמה בדף הכניסה
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-    </div>
-  )
 }
 
 export default Help
