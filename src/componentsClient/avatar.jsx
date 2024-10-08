@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Avatar() {
-  // קומפוננטת הבחירה של אוואטרים ותמונות
   const AvatarPicker = () => {
     const [selectedAvatar, setSelectedAvatar] = useState(null); // שמירת האוואטר הנבחר
     const [gender, setGender] = useState(''); // שמירת בחירת המגדר
     const [uploadedImage, setUploadedImage] = useState(null); // שמירת התמונה שהועלתה
+    const [confirmed, setConfirmed] = useState(false); // שמירת אישור הבחירה
 
-    // יצירת URLים לאוואטרים מצויירים בסגנון ריק ומורטי
     const maleAvatars = [
       'https://avatars.dicebear.com/api/adventurer/male1.svg',
       'https://avatars.dicebear.com/api/adventurer/male2.svg',
@@ -23,13 +22,12 @@ function Avatar() {
       'https://avatars.dicebear.com/api/adventurer/female4.svg'
     ];
 
-    // פונקציה לבחירת אוואטר
     const handleAvatarClick = (avatar) => {
       setSelectedAvatar(avatar);
       setUploadedImage(null); // איפוס תמונה שהועלתה
+      setConfirmed(false); // איפוס אישור
     };
 
-    // פונקציה להעלאת תמונה
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
       if (file) {
@@ -37,9 +35,15 @@ function Avatar() {
         reader.onloadend = () => {
           setUploadedImage(reader.result);
           setSelectedAvatar(null); // איפוס אוואטר נבחר
+          setConfirmed(false); // איפוס אישור
         };
         reader.readAsDataURL(file);
       }
+    };
+
+    const handleConfirm = () => {
+      setConfirmed(true);
+      alert('האוואטר אושר בהצלחה!');
     };
 
     return (
@@ -110,18 +114,22 @@ function Avatar() {
                 </div>
               ))}
             </div>
+
+            {/* כפתור אישור */}
+            {(selectedAvatar || uploadedImage) && (
+              <div className="mt-4">
+                <button className="btn btn-success" onClick={handleConfirm} disabled={confirmed}>
+                  {confirmed ? 'אושר' : 'אשר בחירה'}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
     );
   };
 
-  return (
-    <div>
-      <AvatarPicker />
-    </div>
-  );
+  return <AvatarPicker />;
 }
 
 export default Avatar;
-
