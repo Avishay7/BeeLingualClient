@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // קומפוננטת הצ'אט
-function Chat() {
+function Chat({ selectedAvatar }) { // נוסיף פרופס לקבלת האוואטר הנבחר
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
     { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
@@ -45,6 +45,15 @@ function Chat() {
             ))}
           </div>
           <div className="input-group mt-3">
+            {/* הצגת האוואטר הנבחר */}
+            {selectedAvatar && (
+              <img
+                src={selectedAvatar}
+                alt="Selected Avatar"
+                className="rounded-circle"
+                style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
+              />
+            )}
             <input
               type="text"
               className="form-control"
@@ -74,5 +83,4 @@ function Chat() {
   );
 }
 
-// ייצוא קומפוננטת Chat
 export default Chat;
