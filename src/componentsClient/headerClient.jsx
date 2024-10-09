@@ -47,6 +47,10 @@ function HeaderClient() {
     nav("/VarificationforgotPass");
   }
 
+  const onGameClick = () => {
+    nav("/Game");
+  }
+
 
 
   return (
@@ -66,6 +70,7 @@ function HeaderClient() {
       <button onClick={onHelpClick}>help</button>
       <button onClick={onAdminClick}>Admin</button> 
       <button onClick={onVarificationforgotPass}>Varification2</button>
+      <button onClick={onGameClick}>Game</button>
     </div>
   )
 }
