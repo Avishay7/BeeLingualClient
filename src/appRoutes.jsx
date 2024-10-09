@@ -18,6 +18,7 @@ import ChangePassword from './componentsClient/changePassword';
 import Submit from './componentsClient/submit';
 import Help from './componentsClient/help';
 import VarificationforgotPass from './componentsClient/varificationforgotPass'
+import Game from './componentsClient/game';
 
 function AppRoutes() {
   return (
@@ -43,6 +44,7 @@ function AppRoutes() {
           <Route path="/help" element={<Help/>} />
           <Route path="/*" element={<Page404 />} />
           <Route path="/VarificationforgotPass" element={<VarificationforgotPass/>}/>
+          <Route path="/game" element={<Game/>} />
         </Route>
       </Routes>
     </BrowserRouter>
