@@ -30,7 +30,7 @@ const loginClient = () => {
   let passwordRef = register("password", { required: true, minLength: 3 });
 
   const toforgatPass = () => {
-    nav("/forgotPassClient");
+    nav("/submit");
   };
 
   const toSignUp = () => {

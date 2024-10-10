@@ -1,41 +1,90 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function VarificationforgotPass() {
-    const myName = useSelector(state => state.myDetailsSlice.email);
-    const email = myName;
+  let nav = useNavigate();
+  const myEmail = useSelector(state => state.myDetailsSlice.email);
+  const [code, setCode] = useState(['', '', '', '']);
+
+  const handleChange = (event, index) => {
+    const value = event.target.value;
+
+    // רק מספרים מותרים והגבלת אורך לאות אחת
+    if (/^[0-9]?$/.test(value)) {
+      const newCode = [...code];
+      newCode[index] = value;
+      setCode(newCode);
+
+      // מעבר אוטומטי לשדה הבא אם יש קלט
+      if (value && index < 3) {
+        document.getElementById(`input-${index + 1}`).focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (event, index) => {
+    // מעבר לשדה הקודם בלחיצה על Backspace כשהשדה ריק
+    if (event.key === 'Backspace' && !code[index] && index > 0) {
+      document.getElementById(`input-${index - 1}`).focus();
+    }
+  };
+
+  const handleSubmit = () => {
+    const codeString = code.join(''); // חיבור הערכים למחרוזת
+    doApi(codeString)
+  };
+
+  // בדיקת תקינות האם כל השדות מולאו
+  const isCodeComplete = code.every((digit) => digit !== '');
+
+  const doApi = async (_code) => {
+    let _dataObg = {
+      email: myEmail,
+      code: _code,
+    }
+    console.log(_dataObg);
+    // API request
+    nav("/forgotPassClient");
+  }
+
   
     return (
-      <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="card p-4 shadow-sm" style={{ width: '350px', borderRadius: '10px' }}>
-          <h3 className="text-center mb-4">Check your Inbox</h3>
-          <p className="text-center mb-4">
-          Enter the 6-digit security code we send to  : <strong>{email}</strong>
-          </p>
-          <form>
-            <div className="d-flex justify-content-center mb-4">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <input
-                  type="text"
-                  key={index}
-                  maxLength="1"
-                  className="form-control text-center mx-1"
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                    fontSize: '24px',
-                    borderRadius: '5px',
-                    border: '1px solid #ced4da',
-                    boxShadow: 'none'
-                  }}
-                />
-              ))}
-            </div>
-            <button type="submit" className="btn btn-primary w-100">Verify</button>
-          </form>
+      <>
+      <div className=" container mt-5 shadow-lg p-4 d-flex flex-column text-center" style={{ width: '80%', maxWidth: '500px', backgroundColor: 'white' }}>
+        <div className="row justify-content-center">
+          {/* <img src="" alt="" /> */}
+          <h1 className=''>password verification</h1>
+
+          <p className="text-center mb-4 mt-2">Enter the 4-digit security code we send to : <strong>{myEmail}</strong></p>
+
+          <div className="d-flex justify-content-center gap-2">
+            {code.map((value, index) => (
+              <input
+                key={index}
+                id={`input-${index}`}
+                type="text"
+                className="form-control text-center"
+                style={{ width: '50px', fontSize: '24px' }}
+                maxLength="1"
+                value={value}
+                onChange={(event) => handleChange(event, index)}
+                onKeyDown={(event) => handleKeyDown(event, index)}
+              />
+            ))}
+          </div>
+
+          <div className="text-center mt-3">
+            <button
+              className="btn btn-primary w-100"
+              onClick={handleSubmit} disabled={!isCodeComplete}  // הכפתור פעיל רק כאשר כל השדות מלאים
+            >Send</button>
+          </div>
         </div>
       </div>
-    );
+    </>
+  );
+  
 }
 
 export default VarificationforgotPass
