@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addEmail } from '../featuers/myDetailsSlice';
+import { API_URL, doApiMethod } from '../services/apiService';
+import { saveTokenLocal } from '../services/localService';
 
 
 const loginClient = () => {
@@ -16,10 +18,20 @@ const loginClient = () => {
   }
 
   const doApi = async (_dataBody) => {
-    // API request
     console.log(_dataBody);
-    dispatch(addEmail({ email: _dataBody.email }));
-    nav("/homeClient");
+    let url = API_URL + "/users/login";
+    try {
+      let resp = await doApiMethod(url, "POST", _dataBody);
+      if (resp.data.token) {
+        saveTokenLocal(resp.data.token);
+        dispatch(addEmail({ email: _dataBody.email }));
+        nav("/homeClient");
+      }
+    }
+    catch (err) {
+      nav("/homeClient");
+      console.log(err.response.data.err);
+    }
   }
 
   let emailRef = register("email", {

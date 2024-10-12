@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addEmail, addName } from '../featuers/myDetailsSlice';
+import { API_URL, doApiMethod } from '../services/apiService';
 
 
 function SignUpClient() {
@@ -16,11 +17,21 @@ function SignUpClient() {
   };
 
   const doApi = async (_dataBody) => {
-    // API request
     console.log(_dataBody);
-    dispatch(addName({ name: _dataBody.FirstName }));
-    dispatch(addEmail({ email: _dataBody.email }));
-    nav("/varification");
+    let url = API_URL + "/users";
+    try {
+      let resp = await doApiMethod(url, "POST", _dataBody);
+      if (resp.data._id) {
+        dispatch(addName({ name: _dataBody.FirstName }));
+        dispatch(addEmail({ email: _dataBody.email }));
+        console.log("You sign up");
+        nav("/varification");
+      }
+    }
+    catch (err) {
+      nav("/varification");
+      console.log(err.response.data);
+    }
   }
 
   let firstNameRef = register("FirstName", { required: true, minLength: 2, maxLength: 20 });

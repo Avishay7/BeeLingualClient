@@ -112,7 +112,7 @@ const DashboardAdmin = () => {
 
               <td>
                 <button className="btn btn-sm" >
-                  <i class="bi bi-arrow-right-circle-fill"></i>
+                  <i className="bi bi-arrow-right-circle-fill"></i>
                 </button>
               </td>
 

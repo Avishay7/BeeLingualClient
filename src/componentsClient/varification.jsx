@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { API_URL, doApiMethod } from '../services/apiService';
 
 const Varification = () => {
   let nav = useNavigate();
@@ -10,13 +10,11 @@ const Varification = () => {
 
   const handleChange = (event, index) => {
     const value = event.target.value;
-
     // רק מספרים מותרים והגבלת אורך לאות אחת
     if (/^[0-9]?$/.test(value)) {
       const newCode = [...code];
       newCode[index] = value;
       setCode(newCode);
-
       // מעבר אוטומטי לשדה הבא אם יש קלט
       if (value && index < 3) {
         document.getElementById(`input-${index + 1}`).focus();
@@ -31,22 +29,34 @@ const Varification = () => {
     }
   };
 
-  const handleSubmit = () => {
-    const codeString = code.join(''); // חיבור הערכים למחרוזת
-    doApi(codeString)
-  };
-
   // בדיקת תקינות האם כל השדות מולאו
   const isCodeComplete = code.every((digit) => digit !== '');
 
-  const doApi = async (_code) => {
+  const handleSubmit = () => {
+    const codeString = code.join(''); // חיבור הערכים למחרוזת
     let _dataObg = {
       email: myEmail,
-      code: _code,
+      code: codeString,
     }
-    console.log(_dataObg);
-    // API request
-    nav("/homeClient");
+    doApi(_dataObg)
+  };
+
+
+  const doApi = async (_dataBody) => {
+    console.log(_dataBody);
+    let url = API_URL + "/users/verification";
+    try {
+      let resp = await doApiMethod(url, "PATCH", _dataBody);
+      console.log(resp);
+      if (resp.data.status = 200) {
+        console.log("You are now a valid user");
+        nav("/homeClient");
+      }
+    }
+    catch (err) {
+      nav("/homeClient");
+      console.log(err.response.data);
+    }
   }
 
   const sendAgain = () => {
@@ -85,7 +95,7 @@ const Varification = () => {
               onClick={handleSubmit} disabled={!isCodeComplete}  // הכפתור פעיל רק כאשר כל השדות מלאים
             >Send</button>
           </div>
-             <p  onClick={sendAgain} className='mt-2 text-danger '>Didn't get a code?</p>
+          <p onClick={sendAgain} className='mt-2 text-danger '>Didn't get a code?</p>
         </div>
       </div>
     </>

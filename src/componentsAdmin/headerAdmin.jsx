@@ -17,9 +17,9 @@ function HeaderAdmin() {
 
   return (
           <div>
-            <button onClick={onDashboardAdminClick}>admin</button>
+            <button onClick={onDashboardAdminClick}>home Admin</button>
             <button onClick={onDashboardAdmin222Click}>admin2</button>
-            <button onClick={onHomeClick}>home</button>
+            <button onClick={onHomeClick}>home Client</button>
           </div>
   )
 }
