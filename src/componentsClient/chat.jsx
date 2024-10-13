@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // קומפוננטת הצ'אט
 function Chat({ selectedAvatar }) { // נוסיף פרופס לקבלת האוואטר הנבחר
+  const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server'; // אווטאר לשרת
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
     { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
@@ -38,9 +39,25 @@ function Chat({ selectedAvatar }) { // נוסיף פרופס לקבלת האוו
           <div className="chat-screen d-flex flex-column">
             {messages.map((msg, index) => (
               <div key={index} className={`d-flex justify-content-${msg.type === 'sent' ? 'end' : 'start'} mb-3`}>
+                {msg.type === 'received' && (
+                  <img
+                    src={serverAvatar}
+                    alt="Server Avatar"
+                    className="rounded-circle"
+                    style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
+                  />
+                )}
                 <div className={`p-2 rounded ${msg.type === 'sent' ? 'bg-primary text-white' : 'bg-light border'}`}>
                   {msg.text}
                 </div>
+                {msg.type === 'sent' && (
+                  <img
+                    src={selectedAvatar}
+                    alt="User Avatar"
+                    className="rounded-circle"
+                    style={{ width: '50px', height: '50px', objectFit: 'cover', marginLeft: '10px' }}
+                  />
+                )}
               </div>
             ))}
           </div>
