@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function AvatarPicker({ setSelectedAvatar }) { // נוסיף את ה-`prop` להעברת האוואטר
+function AvatarPicker({ setSelectedAvatar }) {
   const [gender, setGender] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [temporaryAvatar, setTemporaryAvatar] = useState(null); // משתנה לבחירה זמנית
 
   const maleAvatars = [
     'https://avatars.dicebear.com/api/adventurer/male1.svg',
@@ -18,18 +19,43 @@ function AvatarPicker({ setSelectedAvatar }) { // נוסיף את ה-`prop` לה
     'https://avatars.dicebear.com/api/adventurer/female4.svg'
   ];
 
-  const handleAvatarClick = (avatar) => {
-    setSelectedAvatar(avatar); // שמירה של האוואטר הנבחר בקומפוננטה הראשית
-    setUploadedImage(null);
+  // טוענים את האוואטר השמור מ-localStorage כשקומפוננטה נטענת
+  useEffect(() => {
+    const savedAvatar = localStorage.getItem('selectedAvatar');
+    if (savedAvatar) {
+      setSelectedAvatar(savedAvatar);
+      setUploadedImage(savedAvatar); // אם זו תמונה שהועלתה
+    }
+  }, [setSelectedAvatar]);
+
+  // פונקציה לשמירת האוואטר ב-localStorage
+  const saveAvatarToLocalStorage = (avatar) => {
+    localStorage.setItem('selectedAvatar', avatar);
+    setSelectedAvatar(avatar); // שמירה בקומפוננטה הראשית
   };
 
+  // פונקציה לבחירת אוואטר אך עדיין לא שמירה
+  const handleAvatarClick = (avatar) => {
+    setTemporaryAvatar(avatar); // שמירת אוואטר זמנית
+    setUploadedImage(null); // ננקה את התמונה שהועלתה במידת הצורך
+  };
+
+  // פונקציה לשמירת הבחירה לאחר לחיצה על כפתור האישור
+  const handleConfirm = () => {
+    if (temporaryAvatar) {
+      saveAvatarToLocalStorage(temporaryAvatar);
+      setTemporaryAvatar(null); // ננקה את הבחירה הזמנית לאחר שמירה
+    }
+  };
+
+  // פונקציה להעלאת תמונה
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUploadedImage(reader.result);
-        setSelectedAvatar(reader.result); // שמירה של התמונה שהועלתה כאוואטר הנבחר
+        setTemporaryAvatar(reader.result); // שמירת התמונה בבחירה זמנית
+        setUploadedImage(reader.result); // הצגת התמונה שהועלתה
       };
       reader.readAsDataURL(file);
     }
@@ -67,7 +93,16 @@ function AvatarPicker({ setSelectedAvatar }) { // נוסיף את ה-`prop` לה
           </div>
 
           {/* הצגת האוואטר או התמונה שהועלתה */}
-          {uploadedImage ? (
+          {temporaryAvatar ? (
+            <div className="mb-4">
+              <img
+                src={temporaryAvatar}
+                alt="Selected Avatar"
+                className="rounded-circle"
+                style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+              />
+            </div>
+          ) : uploadedImage ? (
             <div className="mb-4">
               <img
                 src={uploadedImage}
@@ -89,6 +124,15 @@ function AvatarPicker({ setSelectedAvatar }) { // נוסיף את ה-`prop` לה
                   />
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* כפתור אישור */}
+          {temporaryAvatar && (
+            <div className="mt-4">
+              <button className="btn btn-success" onClick={handleConfirm}>
+                אישור אוואטר
+              </button>
             </div>
           )}
         </div>
