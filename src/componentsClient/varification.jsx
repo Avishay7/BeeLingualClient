@@ -36,7 +36,7 @@ const Varification = () => {
     const codeString = code.join(''); // חיבור הערכים למחרוזת
     let _dataObg = {
       email: myEmail,
-      code: codeString,
+      verifictionCode: codeString,
     }
     doApi(_dataObg)
   };
