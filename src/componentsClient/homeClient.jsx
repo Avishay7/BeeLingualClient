@@ -51,6 +51,10 @@ const HomeClient = () => {
             <div className="row h-100" >
                 <div className="d-flex flex-row justify-content-between w-100 h-100">
                     {/* הצד השמאלי של הדף  */}
+                    <div className="text-center mb-4">
+                            <img src="/path/to/logo.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
+                            <h2 style={{ margin: '0' }}>beeLengual</h2>
+                        </div>
                     <div id='left' className=" p-5 col-md-6 d-flex flex-column align-items-center justify-content-center h-100">
                         {[1, 2, 3].map((step) => (
 

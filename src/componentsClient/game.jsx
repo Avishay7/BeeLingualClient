@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const sentences = [
   { sentence: "The cat is ___ the table.", correctWord: "under" },
   { sentence: "I like to drink ___ in the morning.", correctWord: "coffee" },
