@@ -1,42 +1,112 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 // קומפוננטת הצ'אט
-function Chat({ selectedAvatar }) { // נוסיף פרופס לקבלת האוואטר הנבחר
-  const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server'; // אווטאר לשרת
+function Chat({ selectedAvatar }) {
+  const navigate = useNavigate();
+  const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
+  
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
     { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
     { text: 'בשמחה בוא נתחיל.', type: 'received' }
   ]);
-  const [newMessage, setNewMessage] = useState('');
 
-  // פונקציה לשליחת הודעה חדשה
+  const [newMessage, setNewMessage] = useState('');
+  const [backgroundImage, setBackgroundImage] = useState(0);
+  const [chatTime, setChatTime] = useState(0);
+
+  const chatContainerRef = useRef(null);
+
+  const backgroundImages = [
+    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',  
+    'https://images.unsplash.com/photo-1518837695005-2083093ee35b',  
+    'https://images.unsplash.com/photo-1470770841072-f978cf4d019e',  
+    'https://images.unsplash.com/photo-1552083375-7216e0cded77',     
+    'https://images.unsplash.com/photo-1603993097397-89c963e325c7',  
+    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',  
+    'https://images.unsplash.com/photo-1547118004-f8c4f32b729c',     
+    'https://images.unsplash.com/photo-1519608487953-e999c86e7455',  
+    'https://images.unsplash.com/photo-1499952127939-9bbf5af6b1c9',  
+  ];
+
   const sendMessage = () => {
     if (newMessage.trim()) {
       setMessages([...messages, { text: newMessage, type: 'sent' }]);
-      setNewMessage(''); // ניקוי שדה הטקסט
+      setNewMessage('');
     }
   };
 
-  // שימוש ב-useEffect כדי לשלוח תגובה אוטומטית
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setChatTime((prevTime) => prevTime + 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].type === 'sent') {
       const autoReply = 'זו תגובה אוטומטית';
       const timeout = setTimeout(() => {
         setMessages([...messages, { text: autoReply, type: 'received' }]);
-      }, 1000); // תגובה אוטומטית לאחר שניה אחת
+      }, 1000);
 
       return () => clearTimeout(timeout);
     }
   }, [messages]);
 
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
   return (
-    <div className="d-flex" style={{ height: '100vh', width: '100%' }}>
-      {/* אזור הצ'אט שתופס 70% מהמסך */}
-      <div className="card border shadow-lg" style={{ width: '70%', height: '100%', marginRight: '2%', borderRadius: '10px' }}>
-        <div className="card-body d-flex flex-column" style={{ height: '100%', overflowY: 'auto' }}>
-          <div className="chat-screen d-flex flex-column">
+    <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%' }}>
+      <button
+        className="btn btn-secondary m-2 align-self-start"
+        onClick={() => navigate('/homeClient')}
+      >
+        חזרה לדף הבית
+      </button>
+
+      <div
+        className="card border shadow-lg fade-in-background d-flex flex-column"
+        style={{
+          width: '80%',
+          height: '80%',
+          borderRadius: '10px',
+          backgroundImage: `url(${backgroundImages[backgroundImage]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transition: 'background-image 2s ease-in-out',
+        }}
+      >
+        <div
+          className="card-body d-flex flex-column flex-grow-1 overflow-auto"
+          ref={chatContainerRef}
+        >
+          <div className="chat-screen d-flex flex-column flex-grow-1">
+            <div className="text-center mb-2">
+              <strong>זמן שיחה:</strong> {formatTime(chatTime)}
+            </div>
+
             {messages.map((msg, index) => (
               <div key={index} className={`d-flex justify-content-${msg.type === 'sent' ? 'end' : 'start'} mb-3`}>
                 {msg.type === 'received' && (
@@ -61,40 +131,32 @@ function Chat({ selectedAvatar }) { // נוסיף פרופס לקבלת האוו
               </div>
             ))}
           </div>
-          <div className="input-group mt-3">
-            {/* הצגת האוואטר הנבחר */}
-            {selectedAvatar && (
-              <img
-                src={selectedAvatar}
-                alt="Selected Avatar"
-                className="rounded-circle"
-                style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
-              />
-            )}
-            <input
-              type="text"
-              className="form-control"
-              placeholder="כתוב הודעה..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  sendMessage();
-                }
-              }}
-            />
-            <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
-          </div>
         </div>
-      </div>
 
-      {/* אזור החדשות שתופס 30% מהמסך */}
-      <div className="news-section" style={{ width: '30%', height: '100%', overflowY: 'auto' }}>
-        <iframe
-          src="https://news.google.com"
-          style={{ width: '100%', height: '100%', border: 'none' }}
-          title="Google News"
-        ></iframe>
+        {/* אזור הכתיבה */}
+        <div className="input-group mt-3 p-3 bg-light" style={{ borderTop: '1px solid #ccc' }}>
+          {selectedAvatar && (
+            <img
+              src={selectedAvatar}
+              alt="Selected Avatar"
+              className="rounded-circle"
+              style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
+            />
+          )}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="כתוב הודעה..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                sendMessage();
+              }
+            }}
+          />
+          <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
+        </div>
       </div>
     </div>
   );
