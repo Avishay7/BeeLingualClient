@@ -59,9 +59,9 @@ const Varification = () => {
     }
   }
 
-  const sendAgain = () => {
-    nav("/SignUp");
-  };
+  // const sendAgain = () => {
+  //   nav("/SignUp");
+  // };
 
   return (
 
@@ -95,7 +95,7 @@ const Varification = () => {
               onClick={handleSubmit} disabled={!isCodeComplete}  // הכפתור פעיל רק כאשר כל השדות מלאים
             >Send</button>
           </div>
-          <p onClick={sendAgain} className='mt-2 text-danger '>Didn't get a code?</p>
+          {/* <p onClick={sendAgain} className='mt-2 text-danger '>Didn't get a code?</p> */}
         </div>
       </div>
     </>

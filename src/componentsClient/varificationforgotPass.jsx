@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { API_URL, doApiMethod } from '../services/apiService';
 
 function VarificationforgotPass() {
   let nav = useNavigate();
@@ -32,25 +33,40 @@ function VarificationforgotPass() {
 
   const handleSubmit = () => {
     const codeString = code.join(''); // חיבור הערכים למחרוזת
-    doApi(codeString)
+    let _dataObg = {
+      email: myEmail,
+      validationCode: codeString,
+    }
+    doApi(_dataObg)
   };
 
   // בדיקת תקינות האם כל השדות מולאו
   const isCodeComplete = code.every((digit) => digit !== '');
 
-  const doApi = async (_code) => {
-    let _dataObg = {
-      email: myEmail,
-      code: _code,
+
+  const doApi = async (_dataBody) => {
+    console.log(_dataBody);
+    let url = API_URL + "/users/validation";
+    try {
+      let resp = await doApiMethod(url, "PATCH", _dataBody);
+      console.log(resp);
+      if (resp.data.status = 200) {
+        console.log("Now you are allowed to change password");
+        nav("/forgotPassClient");
+      }
     }
-    console.log(_dataObg);
-    // API request
-    nav("/forgotPassClient");
+    catch (err) {
+      console.log(err.response.data);
+    }
   }
 
-  
-    return (
-      <>
+
+   const sendAgain = () => {
+    nav("/submit");
+  };
+
+  return (
+    <>
       <div className=" container mt-5 shadow-lg p-4 d-flex flex-column text-center" style={{ width: '80%', maxWidth: '500px', backgroundColor: 'white' }}>
         <div className="row justify-content-center">
           {/* <img src="" alt="" /> */}
@@ -80,11 +96,12 @@ function VarificationforgotPass() {
               onClick={handleSubmit} disabled={!isCodeComplete}  // הכפתור פעיל רק כאשר כל השדות מלאים
             >Send</button>
           </div>
+            <p onClick={sendAgain} className='mt-2 text-danger '>Didn't get a code?</p>
         </div>
       </div>
     </>
   );
-  
+
 }
 
 export default VarificationforgotPass
