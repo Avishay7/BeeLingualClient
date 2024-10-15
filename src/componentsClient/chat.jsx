@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function Chat({ selectedAvatar }) {
   const navigate = useNavigate();
   const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
-  
+
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
     { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
@@ -20,15 +20,15 @@ function Chat({ selectedAvatar }) {
   const chatContainerRef = useRef(null);
 
   const backgroundImages = [
-    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',  
-    'https://images.unsplash.com/photo-1518837695005-2083093ee35b',  
-    'https://images.unsplash.com/photo-1470770841072-f978cf4d019e',  
-    'https://images.unsplash.com/photo-1552083375-7216e0cded77',     
-    'https://images.unsplash.com/photo-1603993097397-89c963e325c7',  
-    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',  
-    'https://images.unsplash.com/photo-1547118004-f8c4f32b729c',     
-    'https://images.unsplash.com/photo-1519608487953-e999c86e7455',  
-    'https://images.unsplash.com/photo-1499952127939-9bbf5af6b1c9',  
+    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+    'https://images.unsplash.com/photo-1518837695005-2083093ee35b',
+    'https://images.unsplash.com/photo-1470770841072-f978cf4d019e',
+    'https://images.unsplash.com/photo-1552083375-7216e0cded77',
+    'https://images.unsplash.com/photo-1603993097397-89c963e325c7',
+    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
+    'https://images.unsplash.com/photo-1547118004-f8c4f32b729c',
+    'https://images.unsplash.com/photo-1519608487953-e999c86e7455',
+    'https://images.unsplash.com/photo-1499952127939-9bbf5af6b1c9',
   ];
 
   const sendMessage = () => {
@@ -41,7 +41,7 @@ function Chat({ selectedAvatar }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
-    }, 20000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
@@ -78,13 +78,33 @@ function Chat({ selectedAvatar }) {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%' }}>
-      <button
-        className="btn btn-secondary m-2 align-self-start"
-        onClick={() => navigate('/homeClient')}
+    <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%', position: 'relative' }}>
+      
+      {/* מקום ללוגו בצד שמאל למעלה */}
+      <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
+        <img src="https://via.placeholder.com/100x50?text=Logo" alt="Logo" />
+      </div>
+
+      {/* בועה עם הזמן מחוץ לצ'אט */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          padding: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.7)',
+          borderRadius: '50%',
+          textAlign: 'center',
+          width: '60px',
+          height: '60px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '1.2em',
+        }}
       >
-        חזרה לדף הבית
-      </button>
+        {formatTime(chatTime)}
+      </div>
 
       <div
         className="card border shadow-lg fade-in-background d-flex flex-column"
@@ -96,17 +116,11 @@ function Chat({ selectedAvatar }) {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transition: 'background-image 2s ease-in-out',
+          position: 'relative',
         }}
       >
-        <div
-          className="card-body d-flex flex-column flex-grow-1 overflow-auto"
-          ref={chatContainerRef}
-        >
+        <div className="card-body d-flex flex-column flex-grow-1 overflow-auto" ref={chatContainerRef}>
           <div className="chat-screen d-flex flex-column flex-grow-1">
-            <div className="text-center mb-2">
-              <strong>זמן שיחה:</strong> {formatTime(chatTime)}
-            </div>
-
             {messages.map((msg, index) => (
               <div key={index} className={`d-flex justify-content-${msg.type === 'sent' ? 'end' : 'start'} mb-3`}>
                 {msg.type === 'received' && (
@@ -158,6 +172,15 @@ function Chat({ selectedAvatar }) {
           <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
         </div>
       </div>
+
+      {/* כפתור יציאה קטן יותר למטה בצד שמאל מחוץ לצ'אט */}
+      <button
+        className="btn btn-secondary m-2 align-self-end"
+        style={{ position: 'fixed', bottom: '20px', left: '20px', width: '100px', height: '40px', fontSize: '0.9em' }}
+        onClick={() => navigate('/homeClient')}
+      >
+        חזרה לדף הבית
+      </button>
     </div>
   );
 }
