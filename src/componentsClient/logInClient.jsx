@@ -29,7 +29,6 @@ const loginClient = () => {
       }
     }
     catch (err) {
-      nav("/homeClient");
       console.log(err.response.data.err);
     }
   }

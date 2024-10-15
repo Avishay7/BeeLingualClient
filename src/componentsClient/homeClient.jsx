@@ -8,7 +8,7 @@ const HomeClient = () => {
     const navigate = useNavigate();
 
     const [showLevelModal, setShowLevelModal] = useState(false);
-    const [selectedLevel, setSelectedLevel] = useState(null);
+    const [selectedLevel, setSelectedLevel] = useState("level1");
 
     const myScore = 6;
     const playTime = "5 hours"; 
