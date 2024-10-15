@@ -20,7 +20,7 @@ const Help = () => {
                             type="button"
                             onClick={() => toggleAccordion(0)}
                         >
-                            ?מה זו הפלטפורמה שלנו
+                             Can I track my progress in the app?  
                         </button>
                     </h2>
                     <div
@@ -28,7 +28,7 @@ const Help = () => {
                         aria-labelledby="headingOne"
                     >
                         <div className="accordion-body">
-                            .הפלטפורמה שלנו מציעה מגוון רחב של שירותים לשיפור הידע והכישורים שלך
+                        Yes, the app provides progress tracking features that allow you to see your improvements over time.
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ const Help = () => {
                             type="button"
                             onClick={() => toggleAccordion(1)}
                         >
-                            ?איך אני מתאם פגישה
+                           What age group is this app suitable for?
                         </button>
                     </h2>
                     <div
@@ -49,7 +49,8 @@ const Help = () => {
                         aria-labelledby="headingTwo"
                     >
                         <div className="accordion-body">
-                            .אתה יכול לתאם פגישה באמצעות טופס ההזמנה באתר או על ידי יצירת קשר עם צוות התמיכה
+
+                        The app is suitable for learners aged 12 and up, making it a great resource for both teens and adults.
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,7 @@ const Help = () => {
                             type="button"
                             onClick={() => toggleAccordion(2)}
                         >
-                            ?מהן שעות הפעילות של התמיכה
+                            How long is it recommended to use the app to make progress in learning?
                         </button>
                     </h2>
                     <div
@@ -70,7 +71,7 @@ const Help = () => {
                         aria-labelledby="headingThree"
                     >
                         <div className="accordion-body">
-                            .שעות הפעילות של התמיכה הן בימים שני עד שישי, 9:00-17:00
+                        It is recommended to use the app for at least 20-30 minutes a day to see consistent progress in your English learning.
                         </div>
                     </div>
                 </div>
@@ -83,7 +84,8 @@ const Help = () => {
                             type="button"
                             onClick={() => toggleAccordion(3)}
                         >
-                            ?איך אני יכול לשחזר את הסיסמה שלי
+                             How can I reset my password?
+
                         </button>
                     </h2>
                     <div
@@ -91,7 +93,7 @@ const Help = () => {
                         aria-labelledby="headingFour"
                     >
                         <div className="accordion-body">
-                            .תוכל לשחזר את הסיסמה שלך באמצעות הקישור לשחזור סיסמה בדף הכניסה
+                        When you log in to the website, you can click on "Forgot my password." From there, the process is very simple and guided.
                         </div>
                     </div>
                 </div>
