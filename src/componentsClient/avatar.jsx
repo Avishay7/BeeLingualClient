@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AvatarPicker({ setSelectedAvatar }) {
   const [gender, setGender] = useState('');
@@ -7,6 +8,8 @@ function AvatarPicker({ setSelectedAvatar }) {
   const [successMessage, setSuccessMessage] = useState(''); // הודעת הצלחה
   const [errorMessage, setErrorMessage] = useState(''); // הודעת שגיאה
   const [confirmedAvatar, setConfirmedAvatar] = useState(null); // משתנה לאוואטר המאושר
+  const navigate = useNavigate();
+
 
   const maleAvatars = [
     'https://avatars.dicebear.com/api/adventurer/male1.svg',
@@ -48,6 +51,7 @@ function AvatarPicker({ setSelectedAvatar }) {
     if (!temporaryAvatar) {
       setErrorMessage('אנא בחר אוואטר או העלה תמונה'); // הודעת שגיאה
       return;
+      
     }
 
     setSelectedAvatar(temporaryAvatar); // שמירה של האוואטר הנבחר בקומפוננטה הראשית
@@ -100,7 +104,7 @@ function AvatarPicker({ setSelectedAvatar }) {
 
           {/* העלאת תמונה */}
           <div className="mb-4">
-            <input type="file" accept="image/*" onChange={handleImageUpload} />
+            <input type="file" accept="image/*" onChange={handleImageUpload}  />
           </div>
 
           {/* הצגת האוואטר או התמונה שהועלתה */}
