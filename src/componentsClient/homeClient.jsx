@@ -45,6 +45,13 @@ const HomeClient = () => {
         setShowLevelModal(false);
     };
 
+    const handleModalClick = (e) => {
+        // אם הלחיצה היא על דיב המודל ולא על התוכן, נסגור את המודל
+        if (e.target === e.currentTarget) {
+            setShowLevelModal(false);
+        }
+    };
+
     const steps = [
         { label: 'Personalize', step: 1 },
         { label: 'Choose Level', step: 2 },
@@ -60,9 +67,6 @@ const HomeClient = () => {
                         <h1 className="mb-4 text-primary" style={{ fontFamily: 'fantasy' }}>Welcome, {myName}!</h1>
                         {steps.map(({ label, step }) => (
                             <div key={step} className='d-flex align-items-center mt-3 w-100'>
-                                <div className='bg-warning rounded-circle border border-secondary d-flex justify-content-center align-items-center' style={{ width: '70px', height: '70px' }}>
-                                    <span style={{ fontSize: '2rem', color: '#fff' }}>{step}</span>
-                                </div>
                                 <button className="btn btn-outline-success rounded-5" onClick={() => handleButtonClick(step)} style={{ width: '60%', fontSize: '2rem', padding: '15px', margin: '15px', backgroundColor: '#28a745', color: '#fff' }}>
                                     {label}
                                 </button>
@@ -88,7 +92,11 @@ const HomeClient = () => {
 
             {/* Level Selection Modal */}
             {showLevelModal && (
-                <div className="modal" style={{ display: 'block', position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000 }}>
+                <div 
+                    className="modal" 
+                    style={{ display: 'block', position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000 }}
+                    onClick={handleModalClick} // הוספת האירוע כאן
+                >
                     <div className="modal-content" style={{ position: 'relative', margin: '15% auto', padding: '20px', background: '#ffffff', borderRadius: '10px', width: '80%', color: 'black', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
                         <h2 style={{ alignSelf: 'center', color: '#007bff' }}>Select Level</h2>
                         <div className="d-flex justify-content-around">
