@@ -77,7 +77,7 @@ const HomeClient = () => {
                     {/* Right Side */}
                     <div id='right' className='col-md-6 h-100 d-flex flex-column align-items-center justify-content-center'>
                         <div className="col-md-12 rounded h-100">
-                            <div className="info d-flex flex-column border border-dark" style={{ marginTop: '50px', width: '80%', background: '#ffffff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
+                            <div className="info d-flex flex-column border border-dark mt" style={{ marginTop: '50px', width: '80%', background: '#ffffff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
                                 <h3 className="text-center mt-3 text-primary">Game Stats</h3>
                                 {[{ label: 'My Score', value: myScore }, { label: 'Questions Answered', value: questionsAnswered }, { label: 'Play Time', value: playTime }, { label: 'Days Playing', value: daysPlaying }].map(({ label, value }) => (
                                     <div key={label} className='bg-light text-center m-2 p-3 rounded-3 fs-4' style={{ flex: 1, border: '2px solid #28a745' }}>
