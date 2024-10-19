@@ -12,7 +12,6 @@ const sentences = [
   { sentence: "We ___ a movie last night.", correctWord: "watched" },
   { sentence: "My favorite color is ___.", correctWord: "blue" },
   { sentence: "She ___ a beautiful painting.", correctWord: "made" },
-  // 20 additional sentences
   { sentence: "The bird is flying ___ the sky.", correctWord: "in" },
   { sentence: "Please ___ your shoes before entering.", correctWord: "remove" },
   { sentence: "I ___ my homework yesterday.", correctWord: "finished" },
@@ -25,11 +24,27 @@ const sentences = [
   { sentence: "I ___ you can do it.", correctWord: "believe" },
 ];
 
-const wordOptions = ["read", "coffee", "under", "sleep", "write", "eat", "milk", "water", "jump", "dog", "store", "his", "east", "watched", "blue", "made"];
+const wordOptions = [
+  "read", "coffee", "under", "sleep", "write", "eat", "milk", "water", "jump", 
+  "dog", "store", "his", "east", "watched", "blue", "made", "over", "before", 
+  "after", "inside", "outside", "beside", "between", "across", "behind", 
+  "towards", "around", "against", "above", "below", "throughout", "during", 
+  "without", "within", "along", "past", "since", "until", "despite", 
+  "because", "although", "unless", "whether", "perhaps", "usually", "quickly", 
+  "slowly", "suddenly", "almost", "always", "never", "often", "sometimes", 
+  "rarely", "frequently", "occasionally"
+];
 
 // פונקציה לערבב מערך
 const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
+};
+
+// פונקציה לבחירת חמש מילים לא נכונות אקראיות
+const getRandomIncorrectWords = (correctWord, allWords, num) => {
+  let incorrectWords = allWords.filter(word => word !== correctWord);
+  let randomIncorrectWords = shuffleArray(incorrectWords).slice(0, num);
+  return randomIncorrectWords;
 };
 
 const Game = () => {
@@ -40,8 +55,10 @@ const Game = () => {
   const [shuffledOptions, setShuffledOptions] = useState([]);
 
   useEffect(() => {
-    // לערבב את האופציות בכל פעם שהמשפט מתחלף
-    setShuffledOptions(shuffleArray([...wordOptions]));
+    // לבחור חמש מילים לא נכונות ולהוסיף את המילה הנכונה
+    const incorrectWords = getRandomIncorrectWords(currentSentence.correctWord, wordOptions, 5);
+    const options = shuffleArray([...incorrectWords, currentSentence.correctWord]);
+    setShuffledOptions(options);
   }, [currentSentence]);
 
   // פונקציה לבדוק אם המילה שנבחרה נכונה ולעבור למשפט הבא
@@ -97,4 +114,3 @@ const Game = () => {
 };
 
 export default Game;
-
