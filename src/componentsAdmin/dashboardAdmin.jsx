@@ -1,82 +1,91 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { API_URL, doApiGet } from '../services/apiService';
+import loginClient from '../componentsClient/logInClient';
+import { reverse } from 'lodash';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addIdMorInfoAdmin } from '../featuers/myDetailsSlice';
 
-const initialUsers = [
-  {
-    id: 1,
-    firstName: 'William Justice',
-    lastName: 'Davis',
-    email: 'hvusavztc770@gmail.com',
-    role: 'Admin',
-  },
-  {
-    id: 2,
-    firstName: 'double',
-    lastName: 'bruh',
-    email: 'cuhewbiyfbve@gmail.com',
-    role: 'Viewer',
-  },
-];
+// const initialUsers = [
+//   {
+//     id: 1,
+//     firstName: 'William Justice',
+//     lastName: 'Davis',
+//     email: 'hvusavztc770@gmail.com',
+//     role: 'Admin',
+//   },
+//   {
+//     id: 2,
+//     firstName: 'double',
+//     lastName: 'bruh',
+//     email: 'cuhewbiyfbve@gmail.com',
+//     role: 'Viewer',
+//   },
+// ];
 
 const DashboardAdmin = () => {
-  const [users, setUsers] = useState(initialUsers);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [userIdToEdit, setUserIdToEdit] = useState(null); // מזהה של המשתמש בעריכה
-  const [newUser, setNewUser] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    role: 'Viewer',
-  });
+  let nav = useNavigate();
+  let [ar, setAr] = useState([]);
+  let [ar2, setAr2] = useState([]);
+  let [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
 
-  const filteredUsers = users.filter(user =>
-    user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    doApi()
+  }, [])
 
-  const handleDelete = (id) => {
-    setUsers(users.filter(user => user.id !== id));
-  };
-
-  const handleAddUser = () => {
-    if (editMode) {
-      // עדכון משתמש
-      setUsers(users.map(user =>
-        user.id === userIdToEdit ? { ...newUser, id: userIdToEdit } : user
-      ));
-      setEditMode(false); // חזרה למצב רגיל
-    } else {
-      // הוספת משתמש חדש
-      const userToAdd = { ...newUser, id: users.length + 1 };
-      setUsers([...users, userToAdd]);
+  const doApi = async () => {
+    let url = API_URL + "/users"
+    try {
+      let resData = await doApiGet(url);
+      let data = resData.data;
+      reverse(data);
+      console.log(data);
+      setAr(data)
+      setAr2(data)
+    } catch (error) {
+      console.log(error);
     }
-    setShowModal(false);
-    setNewUser({ firstName: '', lastName: '', email: '', role: 'Viewer' });
-  };
+  }
 
-  const handleEditUser = (user) => {
-    setNewUser(user); // טעינת פרטי המשתמש לטופס
-    setUserIdToEdit(user.id); // שמירת מזהה המשתמש לעריכה
-    setEditMode(true); // מעבר למצב עריכה
-    setShowModal(true); // פתיחת המודאל
+  const onSearchClick = () => {
+    let tempAr = [];
+    for (let index = 0; index < ar2.length; index++) {
+      if (ar2[index].FirstName == searchText) {
+        tempAr.push(ar2[index]);
+
+      }
+    }
+    if (tempAr.length > 0) {
+      setAr(tempAr)
+      console.log("User found");
+    } else {
+      console.log("User with this name not found");
+      if (searchText == "") {
+        setAr(ar2)
+      }
+    }
+  }
+
+  const handleChange = (event) => {
+    setSearchText(event.target.value);
+  }
+
+  const toAdmin2 = (id) => {
+    console.log("_id");
+    console.log(id);
+    dispatch(addIdMorInfoAdmin({ idMorInfoAdmin: id }));
+    nav("/admin/admin222");
   };
 
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4 ">
-        <button className="btn btn-success" onClick={() => setShowModal(true)}>
-          {editMode ? 'Edit User' : 'Add User'} {/* הצגת הכותרת המתאימה */}
-        </button>
         <div className="d-flex">
-          <input
-            type="text"
-            placeholder="Search user"
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <input type="text" value={searchText} onChange={handleChange} className="d-flex justify-content-between align-items-center mb-4 " placeholder="Search Role" id="" />
+          <input type="button" onClick={onSearchClick} value="Search" className="d-flex justify-content-between align-items-center mb-4 " />
         </div>
       </div>
 
@@ -88,106 +97,41 @@ const DashboardAdmin = () => {
             <th>Last Name</th>
             <th>E-mail</th>
             <th>Role</th>
-            <th>Action</th>
-            <th>Info</th>
+            {/* <th>Action</th> */}
+            <th>More Info</th>
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user, index) => (
-            <tr key={user.id}>
-              <td>{index + 1}</td>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
+          {ar.map((user, index) => {
+            return (
+              <tr key={user._id}>
+                <td>{index + 1}</td>
+                <td>{user.FirstName}</td>
+                <td>{user.LastName}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
 
-              <td>
+                {/* <td>
                 <button className="btn btn-sm" onClick={() => handleEditUser(user)}>
                   <i className="bi bi-pencil-fill"></i>
                 </button>
                 <button className="btn btn-sm" onClick={() => handleDelete(user.id)}>
                   <i className="bi bi-trash-fill"></i>
                 </button>
-              </td>
+              </td> */}
 
-              <td>
-                <button className="btn btn-sm" >
-                  <i className="bi bi-arrow-right-circle-fill"></i>
-                </button>
-              </td>
+                <td>
+                  <button className="btn btn-sm" onClick={() => toAdmin2(user._id)}>
+                    <i className="bi bi-arrow-right-circle-fill"></i>
+                  </button>
+                </td>
 
-            </tr>
-          ))}
+              </tr>
+            )
+          }
+          )}
         </tbody>
       </table>
-
-
-      {showModal && (
-        <div className="modal" style={{ display: 'block', background: 'rgba(0,0,0,0.5)' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">{editMode ? 'Edit User' : 'Add New User'}</h5>
-                <button
-                  type="button"
-                  className="close"
-                  onClick={() => { setShowModal(false); setEditMode(false); }}
-                  style={{ marginLeft: 'auto' }}
-                >
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <label>First Name</label>
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  value={newUser.firstName}
-                  onChange={(e) => setNewUser({ ...newUser, firstName: e.target.value })}
-                  className="form-control mb-2"
-                />
-
-                <label>Last Name</label>
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  value={newUser.lastName}
-                  onChange={(e) => setNewUser({ ...newUser, lastName: e.target.value })}
-                  className="form-control mb-2"
-                />
-
-                <label>Email</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={newUser.email}
-                  onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                  className="form-control mb-2"
-                />
-
-                <label>Role</label>
-                <select
-                  value={newUser.role}
-                  onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-                  className="form-control mb-2 "
-                >
-                  <option value="Viewer">Viewer</option>
-                  <option value="Admin">Admin</option>
-                </select>
-              </div>
-
-              <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => { setShowModal(false); setEditMode(false); }}>
-                  Cancel
-                </button>
-                <button className="btn btn-primary" onClick={handleAddUser}>
-                  {editMode ? 'Update User' : 'Add User'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

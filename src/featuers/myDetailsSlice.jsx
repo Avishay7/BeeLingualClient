@@ -1,22 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    name:"test",
-    email:"test@gmail.com",
-  }
+  name: "test",
+  email: "test@gmail.com",
+  idMorInfoAdmin: "0",
+}
 
-  const myDetailsSlice = createSlice({
-    name:"myDetails",
-    initialState,
-    reducers:{
-       addName:(start,activation)=>{
-         start.name = activation.payload.name ;
-       },
-       addEmail:(start,activation)=>{
-         start.email = activation.payload.email ;
-       }
+const myDetailsSlice = createSlice({
+  name: "myDetails",
+  initialState,
+  reducers: {
+    addName: (start, activation) => {
+      start.name = activation.payload.name;
+    },
+    addEmail: (start, activation) => {
+      start.email = activation.payload.email;
+    },
+    addIdMorInfoAdmin: (start, activation) => {
+      start.idMorInfoAdmin = activation.payload.idMorInfoAdmin;
     }
-})  
+  }
+})
 
-export const {addName ,addEmail}  = myDetailsSlice.actions 
+export const { addName, addEmail, addIdMorInfoAdmin } = myDetailsSlice.actions
 export default myDetailsSlice.reducer
