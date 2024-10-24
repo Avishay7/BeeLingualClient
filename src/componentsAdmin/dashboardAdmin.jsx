@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { API_URL, doApiGet } from '../services/apiService';
-import loginClient from '../componentsClient/logInClient';
 import { reverse } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
