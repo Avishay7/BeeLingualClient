@@ -8,6 +8,8 @@ import { API_URL, doApiMethod } from '../services/apiService';
 function Chat() {
   const myName = useSelector(state => state.myDetailsSlice.name);
   const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
+  let StartTextToSend = "I would like to continue the conversation with you where we left off :";
+  let FinalTextToSend = "";
   // בנויה הודעה להכניס
   const startChat = "start Chat ...";
   const navigate = useNavigate();
@@ -16,9 +18,10 @@ function Chat() {
   const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
 
   const [messages, setMessages] = useState([
-    { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'received' },
-    // { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
-    // { text: 'בשמחה בוא נתחיל.', type: 'received' }
+    { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'you said' },
+    // { text: 'on climate warming', type: 'I said' },
+    // { text: `good`, type: 'you said' },
+    // { text: 'thanks', type: 'I said' },
   ]);
   const [newMessage, setNewMessage] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(0);
@@ -36,12 +39,7 @@ function Chat() {
     'https://images.unsplash.com/photo-1499952127939-9bbf5af6b1c9',
   ];
 
-  
-  const sendMessage = () => {
-    if (newMessage.trim()) {
-      setMessages([...messages, { text: newMessage, type: 'sent' }]);
-    }
-  };
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,34 +48,55 @@ function Chat() {
     return () => clearInterval(interval);
   }, []);
 
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      setMessages([...messages, { text: newMessage, type: 'I said' }]);
+    }
+  };
+
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].type === 'I said') {
+      formatConversation()
+    }
+  }, [messages]);
+
+
+  const formatConversation = () => {
+    let conversation = messages
+      .map(item => {
+        if (item.type === 'you said') {
+          return `you said: ${item.text}`;
+        } else if (item.type === 'I said') {
+          return `I said: ${item.text}`;
+        }
+        return '';
+      }).join(' ');
+    let TextToSend = StartTextToSend + conversation + ", Now it's your turn";
+    console.log(conversation);
+    console.log(TextToSend);
+    doApi(TextToSend);
+  };
+
+
   const doApi = async (_data) => {
     let _dataBody = {
-      message: startChat
+      message: _data
     }
-    setNewMessage('');
-    if (_data) {
-      _dataBody = {
-        message: _data
-      }
       console.log(_dataBody);
       let url = API_URL + "/chats";
       try {
         let data = await doApiMethod(url, "POST", _dataBody);
         console.log(data.data.response);
         const timeout = setTimeout(() => {
-          setMessages([...messages, { text: data.data.response, type: 'received' }]);
+          setMessages([...messages, { text: data.data.response, type: 'you said' }]);
         }, 1000);
         return () => clearTimeout(timeout);
       }
       catch (err) {
         console.log(err.response.data);
       }
-    }
   }
-
- 
-
- 
 
 
   useEffect(() => {
@@ -93,13 +112,7 @@ function Chat() {
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].type === 'sent') {
 
-      doApi(newMessage);
-
-    }
-  }, [messages]);
 
 
   // const a = () => {}
@@ -154,8 +167,8 @@ function Chat() {
         <div className="card-body d-flex flex-column flex-grow-1 overflow-auto" ref={chatContainerRef}>
           <div className="chat-screen d-flex flex-column flex-grow-1">
             {messages.map((msg, index) => (
-              <div key={index} className={`d-flex justify-content-${msg.type === 'sent' ? 'end' : 'start'} mb-3`}>
-                {msg.type === 'received' && (
+              <div key={index} className={`d-flex justify-content-${msg.type === 'I said' ? 'end' : 'start'} mb-3`}>
+                {msg.type === 'you said' && (
                   <img
                     src={serverAvatar}
                     alt="Server Avatar"
@@ -163,10 +176,10 @@ function Chat() {
                     style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
                   />
                 )}
-                <div className={`p-2 rounded ${msg.type === 'sent' ? 'bg-primary text-white' : 'bg-light border'}`}>
+                <div className={`p-2 rounded ${msg.type === 'I said' ? 'bg-primary text-white' : 'bg-light border'}`}>
                   {msg.text}
                 </div>
-                {msg.type === 'sent' && (
+                {msg.type === 'I said' && (
                   <img
                     src={selectedAvatar}
                     alt="User Avatar"
