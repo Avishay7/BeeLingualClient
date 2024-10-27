@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { API_URL, doApiGet, doApiMethod } from '../services/apiService';
-import { addAvatar, addLevel } from '../featuers/myDetailsSlice';
+import { addAvatar, addLevel, addName } from '../featuers/myDetailsSlice';
 
 const HomeClient = () => {
     const myName = useSelector(state => state.myDetailsSlice.name);
@@ -32,6 +32,7 @@ const HomeClient = () => {
           setSelectedLevel(data.data.level);
           dispatch(addLevel({ level: data.data.level }));
           dispatch(addAvatar({ avatar: data.data.avatar }));
+          dispatch(addName({ name: data.data.FirstName }));
         } catch (error) {
           console.log(error);
         }

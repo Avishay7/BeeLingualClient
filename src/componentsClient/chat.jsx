@@ -2,19 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { API_URL, doApiMethod } from '../services/apiService';
 
 // קומפוננטת הצ'אט
 function Chat() {
+  const myName = useSelector(state => state.myDetailsSlice.name);
   const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
+  // בנויה הודעה להכניס
+  const startChat = "start Chat ...";
   const navigate = useNavigate();
   const location = useLocation();
   const selectedAvatar = location.state?.avatarUrl || myAvatar || 'https://via.placeholder.com/50/0000FF/808080?text=Server';
   const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
 
   const [messages, setMessages] = useState([
-    { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
-    { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
-    { text: 'בשמחה בוא נתחיל.', type: 'received' }
+    { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'received' },
+    // { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
+    // { text: 'בשמחה בוא נתחיל.', type: 'received' }
   ]);
   const [newMessage, setNewMessage] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(0);
@@ -32,19 +36,49 @@ function Chat() {
     'https://images.unsplash.com/photo-1499952127939-9bbf5af6b1c9',
   ];
 
+  
   const sendMessage = () => {
     if (newMessage.trim()) {
       setMessages([...messages, { text: newMessage, type: 'sent' }]);
-      setNewMessage('');
     }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
-    }, 10000);
+    }, 100000);
     return () => clearInterval(interval);
   }, []);
+
+  const doApi = async (_data) => {
+    let _dataBody = {
+      message: startChat
+    }
+    setNewMessage('');
+    if (_data) {
+      _dataBody = {
+        message: _data
+      }
+      console.log(_dataBody);
+      let url = API_URL + "/chats";
+      try {
+        let data = await doApiMethod(url, "POST", _dataBody);
+        console.log(data.data.response);
+        const timeout = setTimeout(() => {
+          setMessages([...messages, { text: data.data.response, type: 'received' }]);
+        }, 1000);
+        return () => clearTimeout(timeout);
+      }
+      catch (err) {
+        console.log(err.response.data);
+      }
+    }
+  }
+
+ 
+
+ 
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -61,13 +95,14 @@ function Chat() {
 
   useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].type === 'sent') {
-      const autoReply = 'זו תגובה אוטומטית';
-      const timeout = setTimeout(() => {
-        setMessages([...messages, { text: autoReply, type: 'received' }]);
-      }, 1000);
-      return () => clearTimeout(timeout);
+
+      doApi(newMessage);
+
     }
   }, [messages]);
+
+
+  // const a = () => {}
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -146,25 +181,20 @@ function Chat() {
 
         {/* אזור הכתיבה */}
         <div className="input-group mt-3 p-3 bg-light" style={{ borderTop: '1px solid #ccc' }}>
-          {selectedAvatar && (
+          {/* {selectedAvatar && (
             <img
               src={selectedAvatar}
               alt="Selected Avatar"
               className="rounded-circle"
               style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
             />
-          )}
+          )} */}
           <input
             type="text"
             className="form-control"
             placeholder="כתוב הודעה..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                sendMessage();
-              }
-            }}
           />
           <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
         </div>
