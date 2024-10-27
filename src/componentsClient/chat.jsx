@@ -1,27 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // קומפוננטת הצ'אט
-function Chat({ selectedAvatar }) {
+function Chat() {
   const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
   const navigate = useNavigate();
+  const location = useLocation();
+  const selectedAvatar = location.state?.avatarUrl || myAvatar || 'https://via.placeholder.com/50/0000FF/808080?text=Server';
   const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
-  // const userAvatar = `/src/assets/pik/${myAvatar}`;
 
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
     { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
     { text: 'בשמחה בוא נתחיל.', type: 'received' }
   ]);
-
   const [newMessage, setNewMessage] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(0);
   const [chatTime, setChatTime] = useState(0);
-
   const chatContainerRef = useRef(null);
-
   const backgroundImages = [
     'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
     'https://images.unsplash.com/photo-1518837695005-2083093ee35b',
@@ -45,7 +43,6 @@ function Chat({ selectedAvatar }) {
     const interval = setInterval(() => {
       setBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
     }, 10000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -53,7 +50,6 @@ function Chat({ selectedAvatar }) {
     const timer = setInterval(() => {
       setChatTime((prevTime) => prevTime + 1);
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -69,7 +65,6 @@ function Chat({ selectedAvatar }) {
       const timeout = setTimeout(() => {
         setMessages([...messages, { text: autoReply, type: 'received' }]);
       }, 1000);
-
       return () => clearTimeout(timeout);
     }
   }, [messages]);
@@ -82,7 +77,6 @@ function Chat({ selectedAvatar }) {
 
   return (
     <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%', position: 'relative' }}>
-      
       {/* מקום ללוגו בצד שמאל למעלה */}
       <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
         <img src="https://via.placeholder.com/100x50?text=Logo" alt="Logo" />
