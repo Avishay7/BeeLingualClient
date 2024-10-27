@@ -83,6 +83,7 @@ function Chat() {
     let _dataBody = {
       message: _data
     }
+    
       console.log(_dataBody);
       let url = API_URL + "/chats";
       try {
