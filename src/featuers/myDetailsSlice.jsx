@@ -4,6 +4,7 @@ const initialState = {
   name: "test",
   email: "test@gmail.com",
   level: "beginner",
+  avatar: "pik1",
   idMorInfoAdmin: "0",
 }
 
@@ -20,11 +21,14 @@ const myDetailsSlice = createSlice({
     addLevel: (start, activation) => {
       start.level = activation.payload.level;
     },
+    addAvatar: (start, activation) => {
+      start.avatar = activation.payload.avatar;
+    },
     addIdMorInfoAdmin: (start, activation) => {
       start.idMorInfoAdmin = activation.payload.idMorInfoAdmin;
     },
   }
 })
 
-export const { addName, addEmail, addLevel, addIdMorInfoAdmin } = myDetailsSlice.actions
+export const { addName, addEmail, addLevel, addIdMorInfoAdmin ,addAvatar} = myDetailsSlice.actions
 export default myDetailsSlice.reducer

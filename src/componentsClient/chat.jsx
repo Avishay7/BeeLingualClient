@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // קומפוננטת הצ'אט
 function Chat({ selectedAvatar }) {
+  const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
   const navigate = useNavigate();
   const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
+  // const userAvatar = `/src/assets/pik/${myAvatar}`;
 
   const [messages, setMessages] = useState([
     { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
