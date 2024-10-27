@@ -7,26 +7,26 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addIdMorInfoAdmin } from '../featuers/myDetailsSlice';
 
-// const initialUsers = [
-//   {
-//     id: 1,
-//     firstName: 'William Justice',
-//     lastName: 'Davis',
-//     email: 'hvusavztc770@gmail.com',
-//     role: 'Admin',
-//   },
-//   {
-//     id: 2,
-//     firstName: 'double',
-//     lastName: 'bruh',
-//     email: 'cuhewbiyfbve@gmail.com',
-//     role: 'Viewer',
-//   },
-// ];
+const initialUsers = [
+  {
+    id: 1,
+    FirstName: 'William Justice',
+    lastName: 'Davis',
+    email: 'hvusavztc770@gmail.com',
+    role: 'Admin',
+  },
+  {
+    id: 2,
+    FirstName: 'double',
+    LastName: 'bruh',
+    email: 'cuhewbiyfbve@gmail.com',
+    role: 'Viewer',
+  },
+];
 
 const DashboardAdmin = () => {
   let nav = useNavigate();
-  let [ar, setAr] = useState([]);
+  let [ar, setAr] = useState(initialUsers);
   let [ar2, setAr2] = useState([]);
   let [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
