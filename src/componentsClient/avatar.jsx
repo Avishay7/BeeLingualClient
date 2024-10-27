@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function AvatarPicker({ setSelectedAvatar }) {
@@ -10,6 +10,7 @@ function AvatarPicker({ setSelectedAvatar }) {
   const [confirmedAvatar, setConfirmedAvatar] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectionConfirmed, setSelectionConfirmed] = useState(false);
+  const [scrollTimeout, setScrollTimeout] = useState(null);
   const navigate = useNavigate();
 
   const generateAvatars = (gender, count) => {
@@ -24,7 +25,7 @@ function AvatarPicker({ setSelectedAvatar }) {
   const currentAvatars = gender === 'male' ? maleAvatars : femaleAvatars;
 
   const handleAvatarClick = (avatar) => {
-    setTemporaryAvatar(avatar.url); // שמור את כתובת ה-URL של האוואטר הזמני
+    setTemporaryAvatar(avatar.url);
     setUploadedImage(null);
     setSuccessMessage('');
     setErrorMessage('');
@@ -49,7 +50,7 @@ function AvatarPicker({ setSelectedAvatar }) {
       setErrorMessage('אנא בחר אוואטר או העלה תמונה');
       return;
     }
-    setSelectedAvatar(temporaryAvatar); // שלח את כתובת ה-URL של האוואטר הנבחר
+    setSelectedAvatar(temporaryAvatar);
     setConfirmedAvatar(temporaryAvatar);
     setSuccessMessage('האוואטר נשמר בהצלחה!');
     setErrorMessage('');
@@ -57,6 +58,7 @@ function AvatarPicker({ setSelectedAvatar }) {
     setTimeout(() => {
       setSuccessMessage('');
     }, 3000);
+    navigate('/HomeClient');
   };
 
   const handleClear = () => {
@@ -70,11 +72,14 @@ function AvatarPicker({ setSelectedAvatar }) {
   };
 
   const handleScroll = (e) => {
-    if (e.deltaY < 0) {
-      setCurrentIndex((prevIndex) => (prevIndex === 0 ? currentAvatars.length - 1 : prevIndex - 1));
-    } else {
-      setCurrentIndex((prevIndex) => (prevIndex === currentAvatars.length - 1 ? 0 : prevIndex + 1));
-    }
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    setScrollTimeout(setTimeout(() => {
+      if (e.deltaY < 0) {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? currentAvatars.length - 1 : prevIndex - 1));
+      } else {
+        setCurrentIndex((prevIndex) => (prevIndex === currentAvatars.length - 1 ? 0 : prevIndex + 1));
+      }
+    }, 500)); // חצי שניה
   };
 
   return (
@@ -129,18 +134,20 @@ function AvatarPicker({ setSelectedAvatar }) {
                   />
                 </div>
               ) : (
-                <div className="row justify-content-center" style={{ overflowX: 'hidden', whiteSpace: 'nowrap' }}>
-                  {currentAvatars.map((avatar, index) => (
-                    <div className="text-center d-inline-block" key={index} style={{ opacity: currentIndex === index ? 1 : 0.3 }}>
+                <div className="d-flex justify-content-center">
+                  <div className="avatar-container" style={{ position: 'relative', overflow: 'hidden', width: '200px', height: '200px' }}>
+                    {currentAvatars.map((avatar, index) => (
                       <img
+                        key={index}
                         src={avatar.url}
                         alt={`Avatar ${index + 1}`}
                         className={`img-thumbnail rounded-circle ${currentIndex === index ? 'selected' : ''}`}
-                        style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                        style={{ position: 'absolute', opacity: currentIndex === index ? 1 : 0, transition: 'opacity 0.3s', cursor: 'pointer' }}
+                        onMouseEnter={() => setCurrentIndex(index)}
                         onClick={() => handleAvatarClick(avatar)}
                       />
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
               {temporaryAvatar && (
