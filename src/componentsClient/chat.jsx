@@ -7,6 +7,7 @@ import { API_URL, doApiMethod } from '../services/apiService';
 // קומפוננטת הצ'אט
 function Chat() {
   const myName = useSelector(state => state.myDetailsSlice.name);
+  const myLevel = useSelector(state => state.myDetailsSlice.level);
   const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
   let StartTextToSend = "I would like to continue the conversation with you where we left off :";
   let FinalTextToSend = "";
@@ -24,6 +25,7 @@ function Chat() {
     // { text: 'thanks', type: 'I said' },
   ]);
   const [newMessage, setNewMessage] = useState('');
+  const [theTime, setTheTime] = useState("");
   const [backgroundImage, setBackgroundImage] = useState(0);
   const [chatTime, setChatTime] = useState(0);
   const chatContainerRef = useRef(null);
@@ -83,20 +85,20 @@ function Chat() {
     let _dataBody = {
       message: _data
     }
-    
-      console.log(_dataBody);
-      let url = API_URL + "/chats";
-      try {
-        let data = await doApiMethod(url, "POST", _dataBody);
-        console.log(data.data.response);
-        const timeout = setTimeout(() => {
-          setMessages([...messages, { text: data.data.response, type: 'you said' }]);
-        }, 1000);
-        return () => clearTimeout(timeout);
-      }
-      catch (err) {
-        console.log(err.response.data);
-      }
+
+    console.log(_dataBody);
+    let url = API_URL + "/chats";
+    try {
+      let data = await doApiMethod(url, "POST", _dataBody);
+      console.log(data.data.response);
+      const timeout = setTimeout(() => {
+        setMessages([...messages, { text: data.data.response, type: 'you said' }]);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+    catch (err) {
+      console.log(err.response.data);
+    }
   }
 
 
@@ -115,14 +117,45 @@ function Chat() {
 
 
 
+  useEffect(() => {
+    // ////////////////////////////
+    formatTime(chatTime)
+  }, [messages]);
 
-  // const a = () => {}
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    let Time = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    // setTheTime(Time);
+    return Time;
   };
+
+  const endCallׂׂׂ = () => {
+    doApiAddChat()
+  };
+
+  const doApiAddChat = async () => {
+    let _dataBody = {
+      // time: theTime,
+      time: "12:38",
+      level: myLevel
+    }
+    console.log(_dataBody);
+    let url = API_URL + "/chats/addChat";
+    try {
+      let data = await doApiMethod(url, "POST", _dataBody);
+      console.log(data.data);
+      navigate('/homeClient');
+    }
+    catch (err) {
+      console.log(err.response.data);
+      navigate('/homeClient')
+    }
+  }
+
+
+
 
   return (
     <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%', position: 'relative' }}>
@@ -218,9 +251,9 @@ function Chat() {
       <button
         className="btn btn-secondary m-2 align-self-end"
         style={{ position: 'fixed', bottom: '20px', left: '20px', width: '100px', height: '40px', fontSize: '0.9em' }}
-        onClick={() => navigate('/homeClient')}
+        onClick={() => endCallׂׂׂ()}
       >
-        חזרה לדף הבית
+        end call
       </button>
     </div>
   );
