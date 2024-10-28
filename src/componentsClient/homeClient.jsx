@@ -109,7 +109,9 @@ const HomeClient = () => {
                     <div id='left' className="p-5 col-md-6 d-flex flex-column align-items-center justify-content-center h-100">
                         {steps.map(({ label, step }) => (
                             <div key={step} className='d-flex align-items-center mt-3 w-100'>
-                                <button className="btn btn-outline-success rounded-3" onClick={() => handleButtonClick(step)} style={{ width: '60%', fontSize: '2rem', padding: '15px', margin: '15px', backgroundColor: '#28a745', color: '#fff' }}>
+                                <button className="btn btn-outline-success rounded-3"
+                                 onClick={() => handleButtonClick(step)} style={{ width: '60%', fontSize: '2rem', padding: '15px',
+                                  margin: '15px', backgroundColor: '#28a745', color: '#fff' }}>
                                     {label}
                                 </button>
                             </div>

@@ -40,11 +40,42 @@ function DashboardAdmin222() {
         }
       }
 
+      const steps = [
+        {label:"Name",step:1},
+        {label:"LastName",step:2},
+        {label:"Level",step:3}
+      ];
+
+      const stepst = [
+        {label:"Level",step:1},
+        {label:"Time",step:2},
+        {label:"Date",step:3}
+      ];
+
     return (
-        <div>
-            
-            <div>Dashboard Admin222 id:{ThisID}</div>
-            <div>name:{thisUser.FirstName}</div>
+        <div className="">
+           
+            <div style={{textAlign:"center", justifyContent:"center"}}>
+              <h1>user details</h1>
+              <div className="border border-praimary-3 w-50">
+                {steps.map(({label,step})=>(
+                   <div key={step} className="">
+                    <p>{label}:</p>
+
+                   </div>
+                ))}
+              
+              </div>
+            </div>
+
+            <div>
+              <div>
+                {stepst.map(({label,step})=>(
+                  <p>{label}</p>
+                ))}
+
+              </div>
+            </div>
         </div>
     )
 }
