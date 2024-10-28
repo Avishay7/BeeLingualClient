@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { API_URL, doApiGet, doApiMethod } from '../services/apiService';
-import { addAvatar, addLevel } from '../featuers/myDetailsSlice';
+import { addAvatar, addLevel, addName } from '../featuers/myDetailsSlice';
 
 const HomeClient = () => {
     const myName = useSelector(state => state.myDetailsSlice.name);
@@ -16,26 +16,26 @@ const HomeClient = () => {
     const myScore = 6;
     const playTime = "5 hours";
     const questionsAnswered = 20;
-    const daysPlaying = 10;
 
     useEffect(() => {
         console.log("name:", myName);
         doApi()
     }, []);
-    
-      const doApi = async () => {
+
+    const doApi = async () => {
         let url = API_URL + "/users/myInfo";
         try {
-          let data = await doApiGet(url);
-          console.log(data.data);
-          setmyInfo(data.data);
-          setSelectedLevel(data.data.level);
-          dispatch(addLevel({ level: data.data.level }));
-          dispatch(addAvatar({ avatar: data.data.avatar }));
+            let data = await doApiGet(url);
+            console.log(data.data);
+            setmyInfo(data.data);
+            setSelectedLevel(data.data.level);
+            dispatch(addLevel({ level: data.data.level }));
+            dispatch(addAvatar({ avatar: data.data.avatar }));
+            dispatch(addName({ name: data.data.FirstName }));
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      }
+    }
 
     const handleButtonClick = (step) => {
         switch (step) {
@@ -62,20 +62,20 @@ const HomeClient = () => {
 
     const doApiUpdatelevel = async (_level) => {
         let _dataBody = {
-          level:_level, 
+            level: _level,
         }
         let url = API_URL + "/users/level";
         console.log(url);
-        
+
         try {
-          let data = await doApiMethod(url, "PUT", _dataBody);
-          console.log(data);
-          dispatch(addLevel({ level: _level }));
-          window.location.reload();
+            let data = await doApiMethod(url, "PUT", _dataBody);
+            console.log(data);
+            dispatch(addLevel({ level: _level }));
+            window.location.reload();
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      }
+    }
 
     const handleModalClick = (e) => {
         // אם הלחיצה היא על דיב המודל ולא על התוכן, נסגור את המודל
@@ -91,8 +91,18 @@ const HomeClient = () => {
     ];
 
     return (
-        <div className="container " style={{ height: '100vh', padding: '20px',  }}>
-             <h1 className="mb-4  text-center">Welcome {myInfo.FirstName}</h1>
+        <div className="container " style={{ height: '100vh', padding: '20px', }}>
+
+            <div style={{
+                marginBottom: '0.5rem',
+                textAlign: 'center',
+                color: '#3498db',
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
+            }}>
+                 <h1 className='mb-2'>Welcome dear {myInfo.FirstName}</h1>
+                <h4>It is important to keep practicing</h4>
+            </div>
+
             <div className="row">
                 <div className="d-flex flex-row justify-content-between w-100 h-100">
                     {/* Left Side */}
@@ -109,11 +119,11 @@ const HomeClient = () => {
                     </div>
 
                     {/* Right Side */}
-                    <div id='right' className='col-md-6 h-100 d-flex flex-column align-items-center justify-content-center'>
-                        <div className="col-md-12 rounded h-100">
-                            <div className="info d-flex flex-column border border-dark mt" style={{ marginTop: '50px', width: '80%', background: '#ffffff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
+                    <div id='right' className='col-md-6 m-4 h-100 d-flex flex-column align-items-center justify-content-center'>
+                        <div className="col-md-12 ">
+                            <div className="info d-flex flex-column border border-dark mt p-2" style={{ marginTop: '50px', width: '80%', background: '#ffffff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
                                 <h3 className="text-center mt-3">Game Stats</h3>
-                                {[{ label: 'My Score', value: myScore }, { label: 'Questions Answered', value: questionsAnswered }, { label: 'Play Time', value: playTime }, { label: 'Days Playing', value: daysPlaying }].map(({ label, value }) => (
+                                {[{ label: 'My Score', value: myScore }, { label: 'Questions Answered', value: questionsAnswered }, { label: 'Play Time', value: playTime }].map(({ label, value }) => (
                                     <div key={label} className='bg-light text-center m-2 p-3 rounded-3 fs-4' style={{ flex: 1, border: '2px solid #28a745' }}>
                                         <p>{label}: <strong>{value}</strong></p>
                                     </div>
@@ -132,7 +142,7 @@ const HomeClient = () => {
                     onClick={handleModalClick} // הוספת האירוע כאן
                 >
                     <div className="modal-content" style={{ position: 'relative', margin: '15% auto', padding: '50px', background: '#ffffff', borderRadius: '50px', width: '80%', color: 'black', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-                        <h1 className='mb-4 text-center'>{myLevel?`your level ${myLevel}`:"Select Level :"}</h1>
+                        <h1 className='mb-4 text-center'>{myLevel ? `your level ${myLevel}` : "Select Level :"}</h1>
                         <div className="d-flex justify-content-around">
                             {["beginner", "Advanced", "Professional"].map(level => (
                                 <button key={level} className="btn btn-info" onClick={() => handleLevelSelect(level)} style={{ fontSize: '1.5rem', padding: '10px 20px' }}>

@@ -1,27 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { API_URL, doApiMethod } from '../services/apiService';
 
 // קומפוננטת הצ'אט
-function Chat({ selectedAvatar }) {
+function Chat() {
+  const myName = useSelector(state => state.myDetailsSlice.name);
+  const myLevel = useSelector(state => state.myDetailsSlice.level);
   const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
+  let StartTextToSend = "I would like to continue the conversation with you where we left off :";
+  let FinalTextToSend = "";
+  // בנויה הודעה להכניס
+  const startChat = "start Chat ...";
   const navigate = useNavigate();
+  const location = useLocation();
+  const selectedAvatar = location.state?.avatarUrl || myAvatar || 'https://via.placeholder.com/50/0000FF/808080?text=Server';
   const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
-  // const userAvatar = `/src/assets/pik/${myAvatar}`;
 
   const [messages, setMessages] = useState([
-    { text: 'שלום! איך אני יכול לעזור לך?', type: 'received' },
-    { text: 'אני רוצה לדבר איתך באנגלית.', type: 'sent' },
-    { text: 'בשמחה בוא נתחיל.', type: 'received' }
+    { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'you said' },
+    // { text: 'on climate warming', type: 'I said' },
+    // { text: `good`, type: 'you said' },
+    // { text: 'thanks', type: 'I said' },
   ]);
-
   const [newMessage, setNewMessage] = useState('');
+  const [theTime, setTheTime] = useState("");
   const [backgroundImage, setBackgroundImage] = useState(0);
   const [chatTime, setChatTime] = useState(0);
-
   const chatContainerRef = useRef(null);
-
   const backgroundImages = [
     'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0',
     'https://images.unsplash.com/photo-1518837695005-2083093ee35b',
@@ -34,26 +41,71 @@ function Chat({ selectedAvatar }) {
     'https://images.unsplash.com/photo-1499952127939-9bbf5af6b1c9',
   ];
 
-  const sendMessage = () => {
-    if (newMessage.trim()) {
-      setMessages([...messages, { text: newMessage, type: 'sent' }]);
-      setNewMessage('');
-    }
-  };
+
 
   useEffect(() => {
     const interval = setInterval(() => {
       setBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
-    }, 10000);
-
+    }, 100000);
     return () => clearInterval(interval);
   }, []);
+
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      setMessages([...messages, { text: newMessage, type: 'I said' }]);
+    }
+  };
+
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].type === 'I said') {
+      formatConversation()
+    }
+  }, [messages]);
+
+
+  const formatConversation = () => {
+    let conversation = messages
+      .map(item => {
+        if (item.type === 'you said') {
+          return `you said: ${item.text}`;
+        } else if (item.type === 'I said') {
+          return `I said: ${item.text}`;
+        }
+        return '';
+      }).join(' ');
+    let TextToSend = StartTextToSend + conversation + ", Now it's your turn";
+    console.log(conversation);
+    console.log(TextToSend);
+    doApi(TextToSend);
+  };
+
+
+  const doApi = async (_data) => {
+    let _dataBody = {
+      message: _data
+    }
+    setNewMessage("")
+    console.log(_dataBody);
+    let url = API_URL + "/chats";
+    try {
+      let data = await doApiMethod(url, "POST", _dataBody);
+      console.log(data.data.response);
+      const timeout = setTimeout(() => {
+        setMessages([...messages, { text: data.data.response, type: 'you said' }]);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+    catch (err) {
+      console.log(err.response.data);
+    }
+  }
+
 
   useEffect(() => {
     const timer = setInterval(() => {
       setChatTime((prevTime) => prevTime + 1);
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -63,26 +115,49 @@ function Chat({ selectedAvatar }) {
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].type === 'sent') {
-      const autoReply = 'זו תגובה אוטומטית';
-      const timeout = setTimeout(() => {
-        setMessages([...messages, { text: autoReply, type: 'received' }]);
-      }, 1000);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [messages]);
+
+  // useEffect(() => {
+  //   formatTime(chatTime)
+  // }, [messages]);
+
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    let Time = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    // setTheTime(Time);
+    return Time;
   };
+
+  const endCallׂׂׂ = () => {
+    doApiAddChat()
+  };
+
+  const doApiAddChat = async () => {
+    let _dataBody = {
+      // time: theTime,
+      time: "12:38",
+      level: myLevel
+    }
+    console.log(_dataBody);
+    let url = API_URL + "/chats/addChat";
+    try {
+      let data = await doApiMethod(url, "POST", _dataBody);
+      console.log(data.data);
+      navigate('/homeClient');
+    }
+    catch (err) {
+      console.log(err.response.data);
+      navigate('/homeClient')
+    }
+  }
+
+
+
 
   return (
     <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%', position: 'relative' }}>
-      
       {/* מקום ללוגו בצד שמאל למעלה */}
       <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
         <img src="https://via.placeholder.com/100x50?text=Logo" alt="Logo" />
@@ -125,8 +200,8 @@ function Chat({ selectedAvatar }) {
         <div className="card-body d-flex flex-column flex-grow-1 overflow-auto" ref={chatContainerRef}>
           <div className="chat-screen d-flex flex-column flex-grow-1">
             {messages.map((msg, index) => (
-              <div key={index} className={`d-flex justify-content-${msg.type === 'sent' ? 'end' : 'start'} mb-3`}>
-                {msg.type === 'received' && (
+              <div key={index} className={`d-flex justify-content-${msg.type === 'I said' ? 'end' : 'start'} mb-3`}>
+                {msg.type === 'you said' && (
                   <img
                     src={serverAvatar}
                     alt="Server Avatar"
@@ -134,10 +209,10 @@ function Chat({ selectedAvatar }) {
                     style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
                   />
                 )}
-                <div className={`p-2 rounded ${msg.type === 'sent' ? 'bg-primary text-white' : 'bg-light border'}`}>
+                <div className={`p-2 rounded ${msg.type === 'I said' ? 'bg-primary text-white' : 'bg-light border'}`}>
                   {msg.text}
                 </div>
-                {msg.type === 'sent' && (
+                {msg.type === 'I said' && (
                   <img
                     src={selectedAvatar}
                     alt="User Avatar"
@@ -152,25 +227,20 @@ function Chat({ selectedAvatar }) {
 
         {/* אזור הכתיבה */}
         <div className="input-group mt-3 p-3 bg-light" style={{ borderTop: '1px solid #ccc' }}>
-          {selectedAvatar && (
+          {/* {selectedAvatar && (
             <img
               src={selectedAvatar}
               alt="Selected Avatar"
               className="rounded-circle"
               style={{ width: '50px', height: '50px', objectFit: 'cover', marginRight: '10px' }}
             />
-          )}
+          )} */}
           <input
             type="text"
             className="form-control"
             placeholder="כתוב הודעה..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                sendMessage();
-              }
-            }}
           />
           <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
         </div>
@@ -180,9 +250,9 @@ function Chat({ selectedAvatar }) {
       <button
         className="btn btn-secondary m-2 align-self-end"
         style={{ position: 'fixed', bottom: '20px', left: '20px', width: '100px', height: '40px', fontSize: '0.9em' }}
-        onClick={() => navigate('/homeClient')}
+        onClick={() => endCallׂׂׂ()}
       >
-        חזרה לדף הבית
+        end call
       </button>
     </div>
   );
