@@ -85,7 +85,7 @@ function Chat() {
     let _dataBody = {
       message: _data
     }
-
+    setNewMessage("")
     console.log(_dataBody);
     let url = API_URL + "/chats";
     try {
@@ -117,10 +117,9 @@ function Chat() {
 
 
 
-  useEffect(() => {
-    // ////////////////////////////
-    formatTime(chatTime)
-  }, [messages]);
+  // useEffect(() => {
+  //   formatTime(chatTime)
+  // }, [messages]);
 
 
   const formatTime = (timeInSeconds) => {
