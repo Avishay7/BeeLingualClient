@@ -7,6 +7,7 @@ import { addAvatar, addLevel, addName } from '../featuers/myDetailsSlice';
 const HomeClient = () => {
     const myName = useSelector(state => state.myDetailsSlice.name);
     const myLevel = useSelector(state => state.myDetailsSlice.level);
+    const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
     const navigate = useNavigate();
     const [showLevelModal, setShowLevelModal] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState(myLevel ? myLevel : "beginner");

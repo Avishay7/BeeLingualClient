@@ -34,11 +34,24 @@ function DashboardAdmin222() {
           let data = await doApiGet(url);
           console.log(data.data);
           setThisUser(data.data);
-        //   setSelectedLevel(data.data.level);
+          doApiAllTests()
         } catch (error) {
           console.log(error);
         }
       }
+
+      const doApiAllTests = async () => {
+        let url = API_URL + "/chats/allChats/"+ThisID;
+        try {
+          let data = await doApiGet(url);
+          console.log(data.data);
+          setAr(data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+
 
       const steps = [
         {label:"Name",step:1},
@@ -53,28 +66,38 @@ function DashboardAdmin222() {
       ];
 
     return (
-        <div className="">
+        <div className="container">
            
             <div style={{textAlign:"center", justifyContent:"center"}}>
               <h1>user details</h1>
-              <div className="border border-praimary-3 w-50">
-                {steps.map(({label,step})=>(
-                   <div key={step} className="">
-                    <p>{label}:</p>
-
-                   </div>
-                ))}
-              
-              </div>
+              <h4>Name :{thisUser.FirstName}</h4>
+  
             </div>
 
             <div>
-              <div>
-                {stepst.map(({label,step})=>(
-                  <p>{label}</p>
-                ))}
-
-              </div>
+            <table className="table table-striped shadow-lg">
+        <thead>
+          <tr>
+            <th>List</th>
+            <th>date</th>
+            <th>level</th>
+            <th>time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ar.map((user, index) => {
+            return (
+              <tr key={user._id}>
+                <td>{index + 1}</td>
+                <td>{user.date_created}</td>
+                <td>{user.level}</td>
+                <td>{user.time}</td>
+              </tr>
+            )
+          }
+          )}
+        </tbody>
+      </table>
             </div>
         </div>
     )
