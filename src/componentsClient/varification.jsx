@@ -50,12 +50,12 @@ const Varification = () => {
       console.log(resp);
       if (resp.data.status = 200) {
         console.log("You are now a valid user");
-        nav("/homeClient");
+        nav("/login");
       }
     }
     catch (err) {
-      nav("/homeClient");
       console.log(err.response.data);
+      nav("/");
     }
   }
 

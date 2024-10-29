@@ -50,13 +50,9 @@ const HomeClient = () => {
             dispatch(addLevel({ level: data.data.level }));
             dispatch(addAvatar({ avatar: data.data.avatar }));
             dispatch(addName({ name: data.data.FirstName }));
-
             if (data.data.role == "admin") {
-                console.log(data.data.role);
                 dispatch(addIsAdmin({ isAdmin: true }));
             }
-            
-            
             doApiAllChats(data.data._id)
         } catch (error) {
             console.log(error);
@@ -66,12 +62,10 @@ const HomeClient = () => {
 
     const doApiAllChats = async (_id) => {
         let url = API_URL + "/chats/allChats/" + _id;
-        console.log(url);
         try {
             let data = await doApiGet(url);
             console.log(data.data);
             setAr(data.data);
-            console.log(IsAdmin);
         } catch (error) {
             console.log(error);
         }
