@@ -73,7 +73,7 @@ const HomeClient = () => {
     const handleButtonClick = (step) => {
         switch (step) {
             case 1:
-                navigate('/avatar');
+                alert("צריך לבנות כמו level")
                 break;
             case 2:
                 setShowLevelModal(true);
