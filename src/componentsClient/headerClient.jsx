@@ -22,9 +22,9 @@ function HeaderClient() {
   const onForgotPassClick = () => {
     nav("/forgotPassClient");
   }
-  const onAvatarClick = () => {
-    nav("/avatar");
-  }
+  // const onAvatarClick = () => {
+  //   nav("/avatar");
+  // }
   const onChatClick = () => {
     nav("/chat");
   }

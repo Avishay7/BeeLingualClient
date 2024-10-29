@@ -13,8 +13,8 @@ const Welcome = () => {
     return (
         <div className="container-fluid mt-5">
             <div className="d-flex justify-content-around p-5 m-3" style={{ height: '350px' }}>
-                <div className="text-center p-3" style={{ height: '100%', width: "40%" }}>
-                    <div className="m-3">logo</div>
+                <div className="text-center p-3" style={{ height: '100%', width: "40%"}}>
+                    <div className="m-3"> <img style={{ height: '10%', width: "10%", borderRadius:"50px"}} src="src/assets/picture/temLog.png" alt="logo" /></div>
                     <button onClick={toSignIn} className="btn btn-outline-primary m-3 w-50">Sign In</button>
                     <button onClick={toSignUp} className="btn btn-outline-primary m-3 w-50">Sign Up</button>
                 </div>

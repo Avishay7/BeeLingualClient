@@ -120,7 +120,7 @@ const HomeClient = () => {
     const steps = [
         { label: 'Personalize', step: 1 },
         { label: 'Choose Level', step: 2 },
-        { label: 'Start', step: 3 }
+        { label: 'Start a lesson', step: 3 }
     ];
 
 

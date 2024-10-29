@@ -158,46 +158,25 @@ function Chat() {
 
 
   return (
-    <div className="d-flex flex-column align-items-center" style={{ height: '100vh', width: '100%', position: 'relative' }}>
+    <div className="pt-3 container d-flex  justify-content-between" style={{ height: '100vh', width: '100%', position: 'relative' }}>
       {/* מקום ללוגו בצד שמאל למעלה */}
-      <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
-        <img src="https://via.placeholder.com/100x50?text=Logo" alt="Logo" />
-      </div>
-
-      {/* בועה עם הזמן מחוץ לצ'אט */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          padding: '10px',
-          backgroundColor: 'rgba(255, 255, 255, 0.7)',
-          borderRadius: '50%',
-          textAlign: 'center',
-          width: '60px',
-          height: '60px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '1.2em',
-        }}
-      >
-        {formatTime(chatTime)}
+      <div className='p-4' style={{ height: '8em', width: "8em", borderRadius: "60px" }}>
+        <img style={{ height: '100%', width: "100%", borderRadius: "60px" }} src="src/assets/picture/temLog.png" alt="logo" />
       </div>
 
       <div
         className="card border shadow-lg fade-in-background d-flex flex-column"
         style={{
-          width: '80%',
-          height: '80%',
+          width: '90%',
+          height: '90%',
           borderRadius: '10px',
           backgroundImage: `url(${backgroundImages[backgroundImage]})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transition: 'background-image 2s ease-in-out',
-          position: 'relative',
-        }}
-      >
+          // position: 'relative',
+        }}>
+
         <div className="card-body d-flex flex-column flex-grow-1 overflow-auto" ref={chatContainerRef}>
           <div className="chat-screen d-flex flex-column flex-grow-1">
             {messages.map((msg, index) => (
@@ -244,6 +223,29 @@ function Chat() {
             onChange={(e) => setNewMessage(e.target.value)}
           />
           <button className="btn btn-primary" onClick={sendMessage}>שלח</button>
+        </div>
+      </div>
+
+      {/* בועה עם הזמן מחוץ לצ'אט */}
+      <div className='p-4'>
+        <div
+          style={{
+            // position: 'absolute',
+            // top: '20px',
+            // right: '20px',
+            padding: '10px',
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            borderRadius: '50%',
+            textAlign: 'center',
+            width: '60px',
+            height: '60px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '1.2em',
+          }}
+        >
+          {formatTime(chatTime)}
         </div>
       </div>
 

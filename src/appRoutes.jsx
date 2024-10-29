@@ -11,7 +11,7 @@ import DashboardAdmin from './componentsAdmin/dashboardAdmin';
 import DashboardAdmin222 from './componentsAdmin/dashboardAdmin222';
 import ForgotPass from './componentsClient/forgotPass';
 import Varification from './componentsClient/varification';
-import Avatar from './componentsClient/avatar';
+// import Avatar from './componentsClient/avatar';
 import Chat from './componentsClient/chat';
 // import ChangePassword from './componentsClient/changePassword';
 import Submit from './componentsClient/submit';
@@ -36,7 +36,7 @@ function AppRoutes() {
           <Route path="/signup" element={<SignUpClient />} />
           <Route path="/varification" element={<Varification/>}/>
           <Route path="/homeClient" element={<HomeClient />} /> 
-          <Route path="/avatar" element={<Avatar/>}/>
+          {/* <Route path="/avatar" element={<Avatar/>}/> */}
           <Route path="/chat" element={<Chat/>}/>
           {/* <Route path="/changePassClint" element={<ChangePassword/>}/> */}
           <Route path="/submit" element={<Submit />} />
