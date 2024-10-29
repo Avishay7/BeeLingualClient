@@ -5,6 +5,22 @@ import { API_URL, doApiGet, doApiMethod } from '../services/apiService';
 import { addAvatar, addLevel, addName } from '../featuers/myDetailsSlice';
 
 const HomeClient = () => {
+    const initialUsers = [
+        {
+          id: 1,
+          tate: "William Justice",
+          time: "Davis",
+          level: "hvusa",
+        },
+        {
+          id: 2,
+          tate: "William Justice",
+          time: "Davis",
+          level: "hvusa",
+        },
+      ];
+    
+      let [ar, setAr] = useState(initialUsers);
     const myName = useSelector(state => state.myDetailsSlice.name);
     const myLevel = useSelector(state => state.myDetailsSlice.level);
     const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
@@ -143,6 +159,30 @@ const HomeClient = () => {
                         <div className="col-md-12 ">
                             <div className="info d-flex flex-column border border-dark mt p-2" style={{ marginTop: '50px', width: '80%', background: '#ffffff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
                                 <h3 className="text-center mt-3">History</h3>
+                                <div>
+        <table className="table table-striped shadow-lg">
+          <thead>
+            <tr>
+              <th>List</th>
+              <th>date</th>
+              <th>level</th>
+              <th>time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ar.map((user, index) => {
+              return (
+                <tr key={user._id}>
+                  <td>{index + 1}</td>
+                  <td>{user.date_created}</td>
+                  <td>{user.level}</td>
+                  <td>{user.time}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
                                 
                             </div>
                         </div>
