@@ -91,6 +91,25 @@ const HomeClient = () => {
         { label: 'Start', step: 3 }
     ];
 
+    const doApiAddChat = async () => {
+        let _dataBody = {
+          // time: theTime,
+          time: "12:38",
+          level: myLevel
+        }
+        console.log(_dataBody);
+        let url = API_URL + "/chats/addChat";
+        try {
+          let data = await doApiMethod(url, "POST", _dataBody);
+          console.log(data.data);
+          navigate('/homeClient');
+        }
+        catch (err) {
+          console.log(err.response.data);
+          navigate('/homeClient')
+        }
+      }
+
     return (
         <div className="container " style={{ height: '100vh', padding: '20px', }}>
 
@@ -123,12 +142,8 @@ const HomeClient = () => {
                     <div id='right' className='col-md-6 m-4 h-100 d-flex flex-column align-items-center justify-content-center'>
                         <div className="col-md-12 ">
                             <div className="info d-flex flex-column border border-dark mt p-2" style={{ marginTop: '50px', width: '80%', background: '#ffffff', borderRadius: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-                                <h3 className="text-center mt-3">Game Stats</h3>
-                                {[{ label: 'My Score', value: myScore }, { label: 'Questions Answered', value: questionsAnswered }, { label: 'Play Time', value: playTime }].map(({ label, value }) => (
-                                    <div key={label} className='bg-light text-center m-2 p-3 rounded-3 fs-4' style={{ flex: 1, border: '2px solid #28a745' }}>
-                                        <p>{label}: <strong>{value}</strong></p>
-                                    </div>
-                                ))}
+                                <h3 className="text-center mt-3">History</h3>
+                                
                             </div>
                         </div>
                     </div>

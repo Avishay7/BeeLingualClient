@@ -126,7 +126,6 @@ function Chat() {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     let Time = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    // setTheTime(Time);
     return Time;
   };
 
@@ -135,9 +134,11 @@ function Chat() {
   };
 
   const doApiAddChat = async () => {
+    const minutes = Math.floor(chatTime / 60);
+    const seconds = chatTime % 60;
+    let Time = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     let _dataBody = {
-      // time: theTime,
-      time: "12:38",
+      time: Time,
       level: myLevel
     }
     console.log(_dataBody);
