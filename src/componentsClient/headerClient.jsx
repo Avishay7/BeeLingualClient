@@ -1,8 +1,51 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { addIfShowNav } from '../featuers/myDetailsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function HeaderClient() {
   let nav = useNavigate()
+  const dispatch = useDispatch();
+  const IfShowNav = useSelector(state => state.myDetailsSlice.ifShowNav);
+  const IsAdmin = useSelector(state => state.myDetailsSlice.isAdmin);
+
+  // const onWelcomeClick = () => {
+  //   nav("/");
+  // }
+
+  // const onloginClick = () => {
+  //   nav("/Login");
+  // }
+  // const onSignUpClick = () => {
+  //   nav("/SignUp");
+  // }
+  // const onForgotPassClick = () => {
+  //   nav("/forgotPassClient");
+  // }
+  // const onAvatarClick = () => {
+  //   nav("/avatar");
+  // }
+  // const onChatClick = () => {
+  //   nav("/chat");
+  // }
+
+  // const onVarifictionClick = () => {
+  //   nav("/varification");
+  // }
+  // const onSubmitClick = () => {
+  //   nav("/submit");
+  // }
+
+  // const onChangePassClick = () => {
+  //   nav("/changePassClint");
+  // }
+  // const onVarificationforgotPass = () => {
+  //   nav("/VarificationforgotPass");
+  // }
+
+  // const onGameClick = () => {
+  //   nav("/Game");
+  // }
 
   const onWelcomeClick = () => {
     nav("/");
@@ -10,47 +53,17 @@ function HeaderClient() {
   const onHomeClick = () => {
     nav("/homeClient");
   }
-  const onAdminClick = () => {
-    nav("/Admin");
-  }
-  const onloginClick = () => {
-    nav("/Login");
-  }
-  const onSignUpClick = () => {
-    nav("/SignUp");
-  }
-  const onForgotPassClick = () => {
-    nav("/forgotPassClient");
-  }
-  // const onAvatarClick = () => {
-  //   nav("/avatar");
-  // }
-  const onChatClick = () => {
-    nav("/chat");
-  }
-
-  const onVarifictionClick = () => {
-    nav("/varification");
-  }
-  const onSubmitClick = () => {
-    nav("/submit");
-  }
   const onHelpClick = () => {
     nav("/help");
   }
-  // const onChangePassClick = () => {
-  //   nav("/changePassClint");
-  // }
-  const onVarificationforgotPass = () => {
-    nav("/VarificationforgotPass");
-  }
-
-  const onGameClick = () => {
-    nav("/Game");
-  }
   const onlogout = () => {
+    dispatch(addIfShowNav({ ifShowNav: false }));
     nav("/logout");
   }
+  const onAdminClick = () => {
+    nav("/Admin");
+  }
+
 
 
 
@@ -67,11 +80,25 @@ function HeaderClient() {
         {/* <button onClick={onAvatarClick}>avatar</button> */}
         {/* <button onClick={onChatClick}>chat</button> */}
         {/* <button onClick={onChangePassClick}>change pass</button> */}
-        <button className='btn btn-info border-black ' onClick={onHomeClick}>Home</button>
+        {IfShowNav ? " " :
+          <button className='btn btn-info border-black ' onClick={onWelcomeClick}>Welcom</button>
+        }
+        {IfShowNav ?
+          <button className='btn btn-info border-black ' onClick={onHomeClick}>Home</button>
+          : ""}
         <button className='btn btn-info border-black' onClick={onHelpClick}>help</button>
+
+        {IfShowNav ?
+          <button className='btn btn-info border-black' onClick={onlogout}>logout</button>
+          : ""}
+
+        {IfShowNav && IsAdmin ?
+          <button className='btn btn-info border-black' onClick={onAdminClick}>Admin</button>
+          : ""}
+
+
+        {/* <button className='btn btn-info border-black ' onClick={onHomeClick}>Home</button> */}
         {/* <button onClick={onGameClick}>Game</button> */}
-        <button className='btn btn-info border-black' onClick={onlogout}>logout</button>
-        <button className='btn btn-info border-black' onClick={onAdminClick}>Admin</button>
       </div>
     </div>
   )

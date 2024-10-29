@@ -5,14 +5,14 @@ function HeaderAdmin() {
   let nav = useNavigate()
 
   const onHomeClick = () => {
-    nav("/");
+    nav("/homeClient");
   }
   const onDashboardAdminClick = () => {
     nav("/admin");
   }
-  const onDashboardAdmin222Click = () => {
-    nav("/admin/admin222");
-  }
+  // const onDashboardAdmin222Click = () => {
+  //   nav("/admin/admin222");
+  // }
 
 
   return (

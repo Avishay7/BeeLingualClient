@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { API_URL, doApiGet, doApiMethod } from '../services/apiService';
-import { addAvatar, addLevel, addName } from '../featuers/myDetailsSlice';
+import { addAvatar, addIfShowNav, addIsAdmin, addLevel, addName } from '../featuers/myDetailsSlice';
 
 const HomeClient = () => {
     const initialUsers = [
@@ -24,6 +24,7 @@ const HomeClient = () => {
     const myName = useSelector(state => state.myDetailsSlice.name);
     const myLevel = useSelector(state => state.myDetailsSlice.level);
     const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
+    const IsAdmin = useSelector(state => state.myDetailsSlice.isAdmin);
     const navigate = useNavigate();
     const [showLevelModal, setShowLevelModal] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState(myLevel ? myLevel : "beginner");
@@ -35,6 +36,7 @@ const HomeClient = () => {
     const questionsAnswered = 20;
 
     useEffect(() => {
+        dispatch(addIfShowNav({ ifShowNav: true }));
         doApi()
     }, []);
 
@@ -48,6 +50,13 @@ const HomeClient = () => {
             dispatch(addLevel({ level: data.data.level }));
             dispatch(addAvatar({ avatar: data.data.avatar }));
             dispatch(addName({ name: data.data.FirstName }));
+
+            if (data.data.role == "admin") {
+                console.log(data.data.role);
+                dispatch(addIsAdmin({ isAdmin: true }));
+            }
+            
+            
             doApiAllChats(data.data._id)
         } catch (error) {
             console.log(error);
@@ -55,17 +64,18 @@ const HomeClient = () => {
     }
 
 
-    const doApiAllChats = async(_id) => {
+    const doApiAllChats = async (_id) => {
         let url = API_URL + "/chats/allChats/" + _id;
         console.log(url);
         try {
             let data = await doApiGet(url);
             console.log(data.data);
             setAr(data.data);
-          } catch (error) {
+            console.log(IsAdmin);
+        } catch (error) {
             console.log(error);
-          }
-      };
+        }
+    };
 
 
 

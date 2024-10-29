@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addEmail } from '../featuers/myDetailsSlice';
+import { addEmail, addIfShowNav } from '../featuers/myDetailsSlice';
 import { API_URL, doApiMethod } from '../services/apiService';
 import { saveTokenLocal } from '../services/localService';
 
@@ -22,9 +22,12 @@ const loginClient = () => {
     let url = API_URL + "/users/login";
     try {
       let resp = await doApiMethod(url, "POST", _dataBody);
+      console.log(resp.data);
+      
       if (resp.data.token) {
         saveTokenLocal(resp.data.token);
         dispatch(addEmail({ email: _dataBody.email }));
+        dispatch(addIfShowNav({ ifShowNav: true }));
         nav("/homeClient");
       }
     }

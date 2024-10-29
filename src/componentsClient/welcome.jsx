@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { addIfShowNav } from "../featuers/myDetailsSlice";
 
 const Welcome = () => {
     let nav = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(addIfShowNav({ ifShowNav: false }));
+    }, []);
+    
     const toSignIn = () => {
         nav("/login");
     };
     const toSignUp = () => {
+        
         nav("/SignUp");
     };
 
