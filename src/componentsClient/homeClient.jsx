@@ -145,8 +145,8 @@ const HomeClient = () => {
                             <div key={step} className='d-flex align-items-center mt-3 w-100'>
                                 <button className="btn btn-info border-dark rounded-3"
                                     onClick={() => handleButtonClick(step)} style={{
-                                        width: '60%', fontSize: '2rem', padding: '15px',
-                                        margin: '15px', color: 'black'
+                                        width: '50%', fontSize: '1.5rem', padding: '15px',
+                                        margin: '10px', color: 'black'
                                     }}>
                                     {label}
                                 </button>

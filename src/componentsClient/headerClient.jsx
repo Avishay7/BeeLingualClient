@@ -28,7 +28,7 @@ function HeaderClient() {
   const onChatClick = () => {
     nav("/chat");
   }
-  
+
   const onVarifictionClick = () => {
     nav("/varification");
   }
@@ -55,23 +55,24 @@ function HeaderClient() {
 
 
   return (
-
-    <div>
-      <button onClick={onWelcomeClick}>Welcom</button>
+    <div className='p-2 container ' style={{ width: "30em" }}>
+      <div className='d-flex justify-content-between '>
+        {/* <button onClick={onWelcomeClick}>Welcom</button>
       <button onClick={onSignUpClick}>Sign Up</button>
       <button onClick={onVarifictionClick}>varifiction</button>
       <button onClick={onloginClick}>Login</button>
       <button onClick={onSubmitClick}>submit</button>
       <button onClick={onVarificationforgotPass}>Varification2</button>
-      <button onClick={onForgotPassClick}>forgot Pass</button>
-      <button onClick={onlogout}>logout</button> 
-      <button onClick={onHomeClick}>Home</button>
-      <button onClick={onAvatarClick}>avatar</button>
-      <button onClick={onChatClick}>chat</button>
-      {/* <button onClick={onChangePassClick}>change pass</button> */}
-      <button onClick={onHelpClick}>help</button>
-      <button onClick={onGameClick}>Game</button>
-      <button onClick={onAdminClick}>Admin</button>
+      <button onClick={onForgotPassClick}>forgot Pass</button> */}
+        {/* <button onClick={onAvatarClick}>avatar</button> */}
+        {/* <button onClick={onChatClick}>chat</button> */}
+        {/* <button onClick={onChangePassClick}>change pass</button> */}
+        <button className='btn btn-info border-black ' onClick={onHomeClick}>Home</button>
+        <button className='btn btn-info border-black' onClick={onHelpClick}>help</button>
+        {/* <button onClick={onGameClick}>Game</button> */}
+        <button className='btn btn-info border-black' onClick={onlogout}>logout</button>
+        <button className='btn btn-info border-black' onClick={onAdminClick}>Admin</button>
+      </div>
     </div>
   )
 }
