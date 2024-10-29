@@ -30,7 +30,7 @@ function DashboardAdmin222() {
     let url = API_URL + "/users/single/" + ThisID;
     try {
       let data = await doApiGet(url);
-      console.log(data.data);
+      // console.log(data.data);
       setThisUser(data.data);
       doApiAllTests();
     } catch (error) {
@@ -39,6 +39,7 @@ function DashboardAdmin222() {
   };
 
   const doApiAllTests = async () => {
+    
     let url = API_URL + "/chats/allChats/" + ThisID;
     try {
       let data = await doApiGet(url);
@@ -81,9 +82,9 @@ function DashboardAdmin222() {
           <tbody>
             {ar.map((user, index) => {
               return (
-                <tr key={user._id}>
+                <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{user.date_created}</td>
+                  <td>{user.date_created ? user.date_created.substring(10, length - 1) : ""}</td>
                   <td>{user.level}</td>
                   <td>{user.time}</td>
                 </tr>
