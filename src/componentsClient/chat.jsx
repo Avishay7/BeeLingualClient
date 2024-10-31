@@ -12,7 +12,7 @@ function Chat() {
   let StartTextToSend = `I would like to continue the conversation with you where we left off : 'I said' : 
 
 1. At the beginning ask me for my level,
-    1 - beginner,
+    
     2 - advanced,
     3 - pro.
 
