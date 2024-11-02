@@ -16,7 +16,8 @@ function Chat() {
   const navigate = useNavigate();
   const location = useLocation();
   const selectedAvatar = location.state?.avatarUrl || myAvatar || 'https://via.placeholder.com/50/0000FF/808080?text=Server';
-  const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
+  // const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
+  const serverAvatar = `src/assets/picture/temLog.png`;
 
   const [messages, setMessages] = useState([
     { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'you said' },
@@ -194,7 +195,7 @@ function Chat() {
                 </div>
                 {msg.type === 'I said' && (
                   <img
-                    src={selectedAvatar}
+                    src={`src/assets/picture/${myAvatar?myAvatar :`pic1`}.png`}
                     alt="User Avatar"
                     className="rounded-circle"
                     style={{ width: '50px', height: '50px', objectFit: 'cover', marginLeft: '10px' }}

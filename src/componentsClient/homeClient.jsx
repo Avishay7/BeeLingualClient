@@ -27,7 +27,9 @@ const HomeClient = () => {
     const IsAdmin = useSelector(state => state.myDetailsSlice.isAdmin);
     const navigate = useNavigate();
     const [showLevelModal, setShowLevelModal] = useState(false);
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState(myLevel ? myLevel : "beginner");
+    const [selectedAvatar, setSelectedAvatar] = useState(myAvatar ? myAvatar : "pik1");
     const [myInfo, setmyInfo] = useState({});
     const dispatch = useDispatch();
 
@@ -47,6 +49,7 @@ const HomeClient = () => {
             console.log(data.data);
             setmyInfo(data.data);
             setSelectedLevel(data.data.level);
+            setSelectedAvatar(data.data.avatar)
             dispatch(addLevel({ level: data.data.level }));
             dispatch(addAvatar({ avatar: data.data.avatar }));
             dispatch(addName({ name: data.data.FirstName }));
@@ -77,7 +80,7 @@ const HomeClient = () => {
     const handleButtonClick = (step) => {
         switch (step) {
             case 1:
-                alert("צריך לבנות כמו level")
+                setShowAvatarModal(true);
                 break;
             case 2:
                 setShowLevelModal(true);
@@ -89,6 +92,29 @@ const HomeClient = () => {
                 break;
         }
     };
+
+    const handleAvatarSelect = (avatar) => {
+        console.log("Selected Level:", avatar);
+        setSelectedAvatar(avatar);
+        doApiUpdateAvatar(avatar)
+        setShowAvatarModal(false);
+    };
+
+    const doApiUpdateAvatar = async (_avatar) => {
+        let _dataBody = {
+            avatar: _avatar,
+        }
+        let url = API_URL + "/users/avatar";
+        console.log(url);
+        try {
+            let data = await doApiMethod(url, "PUT", _dataBody);
+            console.log(data);
+            dispatch(addAvatar({ avatar: _avatar }));
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleLevelSelect = (level) => {
         console.log("Selected Level:", level);
@@ -103,7 +129,6 @@ const HomeClient = () => {
         }
         let url = API_URL + "/users/level";
         console.log(url);
-
         try {
             let data = await doApiMethod(url, "PUT", _dataBody);
             console.log(data);
@@ -114,10 +139,12 @@ const HomeClient = () => {
         }
     }
 
+
     const handleModalClick = (e) => {
         // אם הלחיצה היא על דיב המודל ולא על התוכן, נסגור את המודל
         if (e.target === e.currentTarget) {
             setShowLevelModal(false);
+            setShowAvatarModal(false);
         }
     };
 
@@ -193,6 +220,34 @@ const HomeClient = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Avatar Selection Modal */}
+            {showAvatarModal && (
+                <div
+                    className="modal"
+                    style={{ display: 'block', position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000 }}
+                    onClick={handleModalClick} // הוספת האירוע כאן
+                >
+                    <div className="modal-content" style={{ position: 'relative', margin: '15% auto', padding: '50px', background: '#ffffff', borderRadius: '50px', width: '80%', color: 'black', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
+                        <h1 className='mb-4 text-center'>{myAvatar ? `your avatar : ` : "Select Avatar :"}{myAvatar ? <img style={{ height: '5%', width: "5%", borderRadius: "60px" }} src={`src/assets/picture/${myAvatar}.png`}></img> : "Select Avatar :"}</h1>
+                        <div className="d-flex justify-content-around">
+                            {[
+                                "pic1",
+                                "pic3",
+                                "pic4",
+                                "pic7",
+                            ].map(avatar => (
+                                <div key={avatar} onClick={() => handleAvatarSelect(avatar)} >
+                                    <img style={{ height: '100%', width: "30%", borderRadius: "60px" }} src={`src/assets/picture/${avatar}.png`}></img>
+                                </div>
+                            ))}
+                        </div>
+                        <button className="btn btn-secondary mt-5" onClick={() => setShowAvatarModal(false)} style={{ marginTop: '20px', width: '500px', alignSelf: 'center' }}>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* Level Selection Modal */}
             {showLevelModal && (
