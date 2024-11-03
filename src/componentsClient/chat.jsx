@@ -45,7 +45,7 @@ function Chat() {
   const location = useLocation();
   const selectedAvatar = location.state?.avatarUrl || myAvatar || 'https://via.placeholder.com/50/0000FF/808080?text=Server';
   // const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
-  const serverAvatar = `src/assets/picture/temLog.png`;
+  const serverAvatar = `src/assets/picture/pic11.jpg`;
 
   const [messages, setMessages] = useState([
     { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'you said' },
@@ -190,7 +190,7 @@ function Chat() {
     <div className="pt-3 container d-flex  justify-content-between" style={{ height: '100vh', width: '100%', position: 'relative' }}>
       {/* מקום ללוגו בצד שמאל למעלה */}
       <div className='p-4' style={{ height: '8em', width: "8em", borderRadius: "60px" }}>
-        <img style={{ height: '100%', width: "100%", borderRadius: "60px" }} src="src/assets/picture/temLog.png" alt="logo" />
+        <img style={{ height: '100%', width: "100%", borderRadius: "60px" }} src="src/assets/picture/temLog.jpg" alt="logo" />
       </div>
 
       <div
@@ -223,7 +223,7 @@ function Chat() {
                 </div>
                 {msg.type === 'I said' && (
                   <img
-                    src={`src/assets/picture/${myAvatar?myAvatar :`pic1`}.png`}
+                    src={`src/assets/picture/${myAvatar?myAvatar :`pic9`}.jpg`}
                     alt="User Avatar"
                     className="rounded-circle"
                     style={{ width: '50px', height: '50px', objectFit: 'cover', marginLeft: '10px' }}

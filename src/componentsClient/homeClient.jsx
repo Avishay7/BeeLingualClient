@@ -229,16 +229,16 @@ const HomeClient = () => {
                     onClick={handleModalClick} // הוספת האירוע כאן
                 >
                     <div className="modal-content" style={{ position: 'relative', margin: '15% auto', padding: '50px', background: '#ffffff', borderRadius: '50px', width: '80%', color: 'black', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-                        <h1 className='mb-4 text-center'>{myAvatar ? `your avatar : ` : "Select Avatar :"}{myAvatar ? <img style={{ height: '5%', width: "5%", borderRadius: "60px" }} src={`src/assets/picture/${myAvatar}.png`}></img> : "Select Avatar :"}</h1>
+                        <h1 className='mb-4 text-center'>{myAvatar ? `your avatar : ` : "Select Avatar :"}{myAvatar ? <img style={{ height: '5%', width: "5%", borderRadius: "60px" }} src={`src/assets/picture/${myAvatar}.jpg`}></img> : "Select Avatar :"}</h1>
                         <div className="d-flex justify-content-around">
                             {[
-                                "pic1",
-                                "pic3",
-                                "pic4",
-                                "pic7",
+                                "pic8",
+                                "pic9",
+                                "pic10",
+                                "pic11",
                             ].map(avatar => (
                                 <div key={avatar} onClick={() => handleAvatarSelect(avatar)} >
-                                    <img style={{ height: '100%', width: "30%", borderRadius: "60px" }} src={`src/assets/picture/${avatar}.png`}></img>
+                                    <img style={{ height: '100%', width: "30%", borderRadius: "60px" }} src={`src/assets/picture/${avatar}.jpg`}></img>
                                 </div>
                             ))}
                         </div>
