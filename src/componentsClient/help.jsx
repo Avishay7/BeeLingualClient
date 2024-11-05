@@ -10,7 +10,7 @@ const Help = () => {
 
     return (
         <div className="container mt-5">
-            <h1 className="text-center">דף עזרה</h1>
+            <h1 className="text-center"> Help</h1>
             <div className="accordion" id="accordionExample">
                 {/* שאלה 1 */}
                 <div className="accordion-item">
