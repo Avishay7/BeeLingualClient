@@ -11,15 +11,12 @@ function Chat() {
   const myAvatar = useSelector(state => state.myDetailsSlice.avatar);
   let StartTextToSend = `I would like to continue the conversation with you where we left off : 'I said' : 
 
-1. At the beginning ask me for my level,
-    
-    2 - advanced,
-    3 - pro.
+Hi, you are currently becoming an English teacher for ${myName} at three different levels 1. Beginner 2. Advanced 3. Professional.
+${myName} in a ${myLevel} state. Some things you need to do:
 
-2. After i choose level,
-    ask me on what subject i want to talk,
-    and teach me by talking on this subject
-    according to my level.
+1. No matter what language Yossi speaks to you, you will always speak to him only in English
+
+2. Your responses will not be longer than 20 words.
 
 3. Cheer me for my answers with divers cheers every time,
     don't repeat the cheers message after message!.
@@ -35,8 +32,9 @@ function Chat() {
 6. After 3 questions,
     ask me if i want to keep talking
     about the current subject.
-
-7. Now write: 'Hi 👋 , i am Fatma the bee 🐝'. `;
+    
+7.Never send links to other places and websites during a conversation.`;
+ 
 
   let FinalTextToSend = "";
   // בנויה הודעה להכניס
@@ -45,7 +43,7 @@ function Chat() {
   const location = useLocation();
   const selectedAvatar = location.state?.avatarUrl || myAvatar || 'https://via.placeholder.com/50/0000FF/808080?text=Server';
   // const serverAvatar = 'https://via.placeholder.com/50/0000FF/808080?text=Server';
-  const serverAvatar = `src/assets/picture/pic11.jpg`;
+  const serverAvatar = `src/assets/picture/pic13.png`;
 
   const [messages, setMessages] = useState([
     { text: `Hello ${myName}, welcome to class, what would you like to talk about today ?`, type: 'you said' },
@@ -190,7 +188,7 @@ function Chat() {
     <div className="pt-3 container d-flex  justify-content-between" style={{ height: '100vh', width: '100%', position: 'relative' }}>
       {/* מקום ללוגו בצד שמאל למעלה */}
       <div className='p-4' style={{ height: '8em', width: "8em", borderRadius: "60px" }}>
-        <img style={{ height: '100%', width: "100%", borderRadius: "60px" }} src="src/assets/picture/temLog.jpg" alt="logo" />
+        <img style={{ height: '100%', width: "100%", borderRadius: "60px" }} src="src/assets/picture/Logo.jpg" alt="logo" />
       </div>
 
       <div
