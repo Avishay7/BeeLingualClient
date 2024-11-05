@@ -86,10 +86,10 @@ function HeaderClient() {
         {IfShowNav ?
           <button className='btn btn-info border-black ' onClick={onHomeClick}>Home</button>
           : ""}
-        <button className='btn btn-info border-black' onClick={onHelpClick}>help</button>
+        <button className='btn btn-info border-black' onClick={onHelpClick}>Help</button>
 
         {IfShowNav ?
-          <button className='btn btn-info border-black' onClick={onlogout}>logout</button>
+          <button className='btn btn-info border-black' onClick={onlogout}>Logout</button>
           : ""}
 
         {IfShowNav && IsAdmin ?
