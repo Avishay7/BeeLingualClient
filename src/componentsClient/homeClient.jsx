@@ -259,7 +259,7 @@ const HomeClient = () => {
                     <div className="modal-content" style={{ position: 'relative', margin: '15% auto', padding: '50px', background: '#ffffff', borderRadius: '50px', width: '80%', color: 'black', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
                         <h1 className='mb-4 text-center'>{myLevel ? `your level ${myLevel}` : "Select Level :"}</h1>
                         <div className="d-flex justify-content-around">
-                            {["beginner", "Advanced", "Professional"].map(level => (
+                            {["Beginner", "Advanced", "Professional"].map(level => (
                                 <button key={level} className="btn btn-info" onClick={() => handleLevelSelect(level)} style={{ fontSize: '1.5rem', padding: '10px 20px' }}>
                                     {level}
                                 </button>
