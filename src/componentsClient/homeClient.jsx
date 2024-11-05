@@ -151,7 +151,7 @@ const HomeClient = () => {
     const steps = [
         { label: 'Personalize', step: 1 },
         { label: 'Choose Level', step: 2 },
-        { label: 'Start a lesson', step: 3 }
+        { label: 'Start Lesson', step: 3 }
     ];
 
 
@@ -195,9 +195,9 @@ const HomeClient = () => {
                                         <thead>
                                             <tr>
                                                 <th>List</th>
-                                                <th>date</th>
-                                                <th>level</th>
-                                                <th>time</th>
+                                                <th>Date</th>
+                                                <th>Level</th>
+                                                <th>Time</th>
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -257,7 +257,7 @@ const HomeClient = () => {
                     onClick={handleModalClick} // הוספת האירוע כאן
                 >
                     <div className="modal-content" style={{ position: 'relative', margin: '15% auto', padding: '50px', background: '#ffffff', borderRadius: '50px', width: '80%', color: 'black', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-                        <h1 className='mb-4 text-center'>{myLevel ? `your level ${myLevel}` : "Select Level :"}</h1>
+                        <h1 className='mb-4 text-center'>{myLevel ? `Your level ${myLevel}` : "Select Level :"}</h1>
                         <div className="d-flex justify-content-around">
                             {["Beginner", "Advanced", "Professional"].map(level => (
                                 <button key={level} className="btn btn-info" onClick={() => handleLevelSelect(level)} style={{ fontSize: '1.5rem', padding: '10px 20px' }}>

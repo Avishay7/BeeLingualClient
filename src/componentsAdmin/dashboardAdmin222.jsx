@@ -74,9 +74,9 @@ function DashboardAdmin222() {
           <thead>
             <tr>
               <th>List</th>
-              <th>date</th>
-              <th>level</th>
-              <th>time</th>
+              <th>Date</th>
+              <th>Level</th>
+              <th>Time</th>
             </tr>
           </thead>
           <tbody>
