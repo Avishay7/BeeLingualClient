@@ -81,7 +81,7 @@ function HeaderClient() {
         {/* <button onClick={onChatClick}>chat</button> */}
         {/* <button onClick={onChangePassClick}>change pass</button> */}
         {IfShowNav ? " " :
-          <button className='btn btn-info border-black ' onClick={onWelcomeClick}>Welcom</button>
+          <button className='btn btn-info border-black ' onClick={onWelcomeClick}>Welcome</button>
         }
         {IfShowNav ?
           <button className='btn btn-info border-black ' onClick={onHomeClick}>Home</button>
